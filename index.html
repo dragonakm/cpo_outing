@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CPO Team Outing — May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1c1c28;
+    --border: #2a2a3a;
+    --text: #f0f0f5;
+    --muted: #6b6b88;
+    --accent: #f5c842;
+    --danger: #ff4f4f;
+    --success: #3ddc84;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .logo-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .logo-subtitle {
+    font-size: 11px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.4;
+    margin-top: 3px;
+    max-width: 280px;
+  }
+  .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .admin-badge {
+    font-size: 10px; font-weight: 700; padding: 3px 8px;
+    background: var(--accent); color: #0a0a0f;
+    border-radius: 4px; letter-spacing: 0.5px; display: none;
+  }
+  .sync-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--muted); flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .sync-dot.live { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .sync-dot.error { background: var(--danger); }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 73px;
+    z-index: 99;
+  }
+  .tab {
+    flex: 1;
+    padding: 10px 4px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-icon { font-size: 17px; display: block; margin-bottom: 2px; }
+
+  /* ── MAIN ── */
+  main { padding: 16px; max-width: 600px; margin: 0 auto; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .section-sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+
+  /* ── FIREBASE CONFIG BANNER ── */
+  .config-banner {
+    background: #1a1208;
+    border: 1px solid #f5c84240;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+  .config-banner strong { color: var(--accent); }
+  .config-step { margin-top: 8px; color: var(--muted); line-height: 1.6; }
+  .config-step code {
+    background: var(--surface2); color: var(--text);
+    padding: 1px 6px; border-radius: 4px; font-size: 12px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-title { font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 18px; border-radius: 8px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    border: none; transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary { background: var(--accent); color: #0a0a0f; }
+  .btn-primary:active { opacity: 0.85; transform: scale(0.97); }
+  .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+  .btn-full { width: 100%; justify-content: center; }
+
+  /* ── INPUTS ── */
+  .input {
+    width: 100%; padding: 10px 14px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-size: 14px; font-family: 'DM Sans', sans-serif;
+    outline: none; transition: border-color 0.2s;
+  }
+  .input:focus { border-color: var(--accent); }
+  .input-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .input-row .input { margin-bottom: 0; }
+
+  /* ── MEMBER LIST ── */
+  .member-list { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
+  .member-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px; background: var(--surface2);
+    border-radius: 8px; border: 1px solid var(--border);
+    font-size: 14px; cursor: grab; transition: all 0.15s;
+  }
+  .member-item:active { opacity: 0.7; transform: scale(0.98); }
+  .member-left { display: flex; align-items: center; gap: 10px; }
+  .member-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 11px; flex-shrink: 0;
+    background: var(--surface); border: 2px solid var(--border);
+  }
+  .member-name { font-weight: 500; }
+
+  /* ── TEAMS ── */
+  .teams-grid { display: grid; gap: 12px; }
+  .team-card {
+    background: var(--surface); border-radius: 12px;
+    border: 2px solid var(--border); overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .team-card.drag-target { border-color: var(--accent); }
+  .team-header {
+    padding: 12px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .team-color-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .team-name-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 1px;
+    flex: 1; margin: 0 10px;
+  }
+  .team-count { font-size: 11px; color: var(--muted); }
+  .team-members-drop {
+    min-height: 44px; padding: 6px 10px 10px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .team-member-chip {
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+    background: var(--surface2); cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .team-member-chip:active { opacity: 0.6; }
+  .chip-x { color: var(--muted); font-size: 10px; }
+  .drop-hint { color: var(--muted); font-size: 12px; padding: 8px 0; }
+
+  /* ── COLOR SWATCHES ── */
+  .color-picker-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .color-swatch {
+    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+    border: 3px solid transparent; transition: all 0.15s;
+  }
+  .color-swatch.selected { border-color: #fff; transform: scale(1.2); }
+
+  /* ── LEADERBOARD ── */
+  .lb-row {
+    display: flex; align-items: center;
+    padding: 12px 14px; border-radius: 10px; margin-bottom: 8px;
+    background: var(--surface2); gap: 12px;
+    position: relative; overflow: hidden;
+    border-left: 3px solid transparent;
+  }
+  .lb-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; width: 26px; text-align: center; flex-shrink: 0;
+  }
+  .lb-rank.gold { color: #f5c842; }
+  .lb-rank.silver { color: #c0c0c0; }
+  .lb-rank.bronze { color: #cd7f32; }
+  .lb-info { flex: 1; min-width: 0; }
+  .lb-name { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lb-sub { font-size: 11px; color: var(--muted); }
+  .lb-score { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; flex-shrink: 0; }
+  .lb-bar { height: 3px; background: var(--surface); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+  .lb-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+
+  /* ── SCORE ENTRY ── */
+  .score-team-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; background: var(--surface2);
+    border-radius: 10px; margin-bottom: 8px;
+  }
+  .score-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .score-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .score-name { font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .score-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .score-btn {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); font-size: 17px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-weight: 700;
+    transition: all 0.15s;
+  }
+  .score-btn:active { background: var(--border); transform: scale(0.9); }
+  .score-input-field {
+    width: 56px; padding: 5px 6px; text-align: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text);
+    font-size: 16px; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; outline: none;
+  }
+  .score-input-field:focus { border-color: var(--accent); }
+
+  /* ── PLAYER SCORE ROW ── */
+  .player-score-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; border-radius: 8px;
+    background: var(--surface2); margin-bottom: 6px;
+  }
+  .player-score-name { flex: 1; font-size: 13px; font-weight: 500; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .player-score-team { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 600; flex-shrink: 0; }
+  .player-score-input {
+    width: 56px; padding: 5px 6px; text-align: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text);
+    font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; outline: none; flex-shrink: 0;
+  }
+  .player-score-input:focus { border-color: var(--accent); }
+
+  /* ── TOGGLE ── */
+  .toggle-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .toggle-btn {
+    flex: 1; padding: 8px; text-align: center; border-radius: 8px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); transition: all 0.2s;
+  }
+  .toggle-btn.active { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
+
+  /* ── MISC ── */
+  .flex-row { display: flex; align-items: center; gap: 8px; }
+  .flex-between { display: flex; align-items: center; justify-content: space-between; }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mb-8 { margin-bottom: 8px; }
+  .mb-12 { margin-bottom: 12px; }
+  .label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .empty { text-align: center; padding: 28px 16px; color: var(--muted); font-size: 13px; }
+  .empty-icon { font-size: 36px; margin-bottom: 8px; }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--success); color: #0a0a0f;
+    padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 700;
+    z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+    z-index: 200; display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  }
+  .modal-overlay.show { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--surface); border-radius: 20px 20px 0 0;
+    padding: 24px 20px 36px; width: 100%; max-width: 600px;
+    transform: translateY(100%); transition: transform 0.3s ease;
+  }
+  .modal-overlay.show .modal { transform: translateY(0); }
+  .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 16px; }
+
+  .spinner {
+    width: 18px; height: 18px; border: 2px solid var(--border);
+    border-top-color: var(--accent); border-radius: 50%;
+    animation: spin 0.7s linear infinite; display: inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo-title">CPO Team Outing — May 2026</div>
+      <div class="logo-subtitle">"The important thing in life is not the triumph, but the struggle. The essential thing is not to have conquered, but to have fought well." — Pierre de Coubertin</div>
+    </div>
+    <div class="header-right">
+      <div class="sync-dot" id="syncDot" title="Sync status"></div>
+      <div class="admin-badge" id="adminBadge">ADMIN</div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="tab active" onclick="switchTab('dashboard')"><span class="tab-icon">🏆</span>Board</div>
+  <div class="tab" onclick="switchTab('teams')"><span class="tab-icon">👥</span>Teams</div>
+  <div class="tab" onclick="switchTab('scores')"><span class="tab-icon">🎯</span>Scores</div>
+  <div class="tab" onclick="switchTab('setup')"><span class="tab-icon">⚙️</span>Setup</div>
+</nav>
+
+<main>
+
+  <!-- ── FIREBASE NOT CONFIGURED BANNER ── -->
+  <div id="firebaseBanner" class="config-banner" style="display:none">
+    <strong>⚠️ Firebase not configured yet</strong>
+    <div class="config-step">
+      1. Go to <strong>console.firebase.google.com</strong> → New project<br>
+      2. Add a Web app → copy the <code>firebaseConfig</code> object<br>
+      3. Create a <strong>Realtime Database</strong> → start in test mode<br>
+      4. Open this HTML file, find <code>PASTE_YOUR_FIREBASE_CONFIG_HERE</code> and replace with your config
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div id="page-dashboard" class="page active">
+    <div class="section-title">Leaderboard</div>
+    <div class="section-sub">Live standings · updates in real time</div>
+    <div class="toggle-row">
+      <div class="toggle-btn active" onclick="switchLB('team',this)">Teams</div>
+      <div class="toggle-btn" onclick="switchLB('player',this)">Players</div>
+    </div>
+    <div id="lb-team"></div>
+    <div id="lb-player" style="display:none"></div>
+  </div>
+
+  <!-- ═══ TEAMS ═══ -->
+  <div id="page-teams" class="page">
+    <div class="section-title">Teams</div>
+    <div class="section-sub">Drag members from pool into a team · tap chip to remove</div>
+    <div class="card">
+      <div class="label">Unassigned (<span id="unassignedCount">0</span>)</div>
+      <div id="unassigned-pool" class="member-list"></div>
+    </div>
+    <div id="teams-area" class="teams-grid"></div>
+    <div id="no-teams-msg" class="empty" style="display:none">
+      <div class="empty-icon">👥</div>Create teams in Setup first
+    </div>
+  </div>
+
+  <!-- ═══ SCORES ═══ -->
+  <div id="page-scores" class="page">
+    <div id="scores-lock" class="empty">
+      <div class="empty-icon">🔒</div>Admin access required
+      <div class="mt-16"><button class="btn btn-primary" onclick="showAdminModal()">Login as Admin</button></div>
+    </div>
+    <div id="scores-content" style="display:none">
+      <div class="section-title">Scores</div>
+      <div class="section-sub">Enter points · saved instantly to all devices</div>
+      <div class="toggle-row">
+        <div class="toggle-btn active" onclick="switchScoreMode('team',this)">By Team</div>
+        <div class="toggle-btn" onclick="switchScoreMode('player',this)">By Player</div>
+      </div>
+      <div id="score-team-area"></div>
+      <div id="score-player-area" style="display:none"></div>
+      <div class="mt-16">
+        <button class="btn btn-primary btn-full" id="saveBtn" onclick="saveScores()">💾 Save Scores</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SETUP ═══ -->
+  <div id="page-setup" class="page">
+    <div id="setup-lock" class="empty">
+      <div class="empty-icon">🔒</div>Admin access required
+      <div class="mt-16"><button class="btn btn-primary" onclick="showAdminModal()">Login as Admin</button></div>
+    </div>
+    <div id="setup-content" style="display:none">
+      <div class="section-title">Setup</div>
+      <div class="section-sub">Members & Teams</div>
+
+      <div class="card">
+        <div class="card-title">👤 Add Members</div>
+        <div class="input-row">
+          <input id="memberInput" class="input" type="text" placeholder="Full name…" onkeydown="if(event.key==='Enter')addMember()">
+          <button class="btn btn-primary" onclick="addMember()">Add</button>
+        </div>
+        <div class="label">All Members (<span id="memberCount">0</span>)</div>
+        <div id="member-list-setup" class="member-list"></div>
+      </div>
+
+      <div class="card mt-8">
+        <div class="card-title">🎨 Create Teams</div>
+        <div class="input-row">
+          <input id="teamNameInput" class="input" type="text" placeholder="Team name…" onkeydown="if(event.key==='Enter')addTeam()">
+          <button class="btn btn-primary" onclick="addTeam()">Create</button>
+        </div>
+        <div class="label mt-8">Pick Colour</div>
+        <div class="color-picker-row" id="colorPicker">
+          <div class="color-swatch selected" style="background:#ff4f4f" data-color="#ff4f4f" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#ff8c00" data-color="#ff8c00" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#f5c842" data-color="#f5c842" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#3ddc84" data-color="#3ddc84" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#00d4ff" data-color="#00d4ff" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#4f8aff" data-color="#4f8aff" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#a855f7" data-color="#a855f7" onclick="selectColor(this)"></div>
+        </div>
+        <div id="teams-list-setup" class="mt-16"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Admin Modal -->
+<div class="modal-overlay" id="adminModal" onclick="closeAdminModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Admin Login</div>
+    <div class="label">Passcode</div>
+    <input id="adminPassInput" class="input mb-12" type="password" placeholder="Enter passcode…" onkeydown="if(event.key==='Enter')verifyAdmin()">
+    <button class="btn btn-primary btn-full" onclick="verifyAdmin()">Unlock</button>
+    <div id="adminError" style="color:var(--danger);font-size:13px;margin-top:10px;text-align:center;display:none">Incorrect passcode</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// STEP 1: Paste your Firebase config here
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const firebaseConfig = PASTE_YOUR_FIREBASE_CONFIG_HERE;
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+const PASSCODE = 'aajks2026';
+
+let db = null;
+let isAdmin = false;
+let selectedColor = '#ff4f4f';
+let dragItem = null;
+
+// Live state (synced from Firebase)
+let state = {
+  members: {},     // { id: { name } }
+  teams: {},       // { id: { name, color, members: {memberId: true} } }
+  scores: {},      // { teamId: number }
+  playerScores: {} // { memberId: number }
+};
+
+// ── FIREBASE INIT ──
+function initFirebase() {
+  try {
+    const app = initializeApp(firebaseConfig);
+    db = getDatabase(app);
+    setSyncStatus('live');
+    listenToData();
+    document.getElementById('firebaseBanner').style.display = 'none';
+  } catch(e) {
+    console.error('Firebase init failed:', e);
+    setSyncStatus('error');
+    document.getElementById('firebaseBanner').style.display = '';
+  }
+}
+
+function setSyncStatus(s) {
+  const dot = document.getElementById('syncDot');
+  dot.className = 'sync-dot' + (s === 'live' ? ' live' : s === 'error' ? ' error' : '');
+  dot.title = s === 'live' ? 'Live sync' : s === 'error' ? 'Sync error' : 'Connecting…';
+}
+
+// ── REAL-TIME LISTENER ──
+function listenToData() {
+  if (!db) return;
+  onValue(ref(db, 'torq03'), (snap) => {
+    const data = snap.val() || {};
+    state.members     = data.members     || {};
+    state.teams       = data.teams       || {};
+    state.scores      = data.scores      || {};
+    state.playerScores= data.playerScores|| {};
+    setSyncStatus('live');
+    refreshCurrentPage();
+  }, (err) => {
+    setSyncStatus('error');
+  });
+}
+
+async function pushData(path, value) {
+  if (!db) return;
+  try {
+    await set(ref(db, 'torq03/' + path), value);
+  } catch(e) {
+    toast('Sync error — check connection');
+    setSyncStatus('error');
+  }
+}
+
+// ── HELPERS ──
+function initials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function toast(msg, color) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = color || 'var(--success)';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+function membersArray() { return Object.entries(state.members).map(([id,v])=>({id,...v})); }
+function teamsArray()   { return Object.entries(state.teams).map(([id,v])=>({id,...v,members:Object.keys(v.members||{})})); }
+function getMemberTeam(memberId) {
+  return teamsArray().find(t => t.members.includes(memberId)) || null;
+}
+function getUnassigned() {
+  const assigned = new Set(teamsArray().flatMap(t=>t.members));
+  return membersArray().filter(m => !assigned.has(m.id));
+}
+
+// ── TABS ──
+window.switchTab = function(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', ['dashboard','teams','scores','setup'][i] === name);
+  });
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  renderPage(name);
+}
+function refreshCurrentPage() {
+  const active = document.querySelector('.page.active');
+  if (!active) return;
+  const id = active.id.replace('page-','');
+  renderPage(id);
+}
+function renderPage(name) {
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'teams')     renderTeamsPage();
+  if (name === 'scores')    renderScores();
+  if (name === 'setup')     renderSetup();
+}
+
+// ── ADMIN ──
+window.showAdminModal = function() {
+  document.getElementById('adminPassInput').value = '';
+  document.getElementById('adminError').style.display = 'none';
+  document.getElementById('adminModal').classList.add('show');
+  setTimeout(() => document.getElementById('adminPassInput').focus(), 350);
+}
+window.closeAdminModal = function(e) {
+  if (e.target === document.getElementById('adminModal'))
+    document.getElementById('adminModal').classList.remove('show');
+}
+window.verifyAdmin = function() {
+  if (document.getElementById('adminPassInput').value === PASSCODE) {
+    isAdmin = true;
+    document.getElementById('adminModal').classList.remove('show');
+    document.getElementById('adminBadge').style.display = 'inline-block';
+    renderSetup(); renderScores();
+    toast('Admin access granted ✓');
+  } else {
+    document.getElementById('adminError').style.display = 'block';
+  }
+}
+
+// ── SETUP: MEMBERS ──
+window.addMember = async function() {
+  const inp = document.getElementById('memberInput');
+  const name = inp.value.trim();
+  if (!name) return;
+  if (membersArray().find(m => m.name.toLowerCase() === name.toLowerCase())) {
+    toast('Already exists', 'var(--danger)'); return;
+  }
+  const id = 'm' + Date.now();
+  await pushData('members/' + id, { name });
+  inp.value = '';
+}
+window.deleteMember = async function(id) {
+  await pushData('members/' + id, null);
+  // Remove from teams
+  for (const t of teamsArray()) {
+    if (t.members.includes(id)) await pushData('teams/' + t.id + '/members/' + id, null);
+  }
+  await pushData('playerScores/' + id, null);
+}
+
+// ── SETUP: TEAMS ──
+window.selectColor = function(el) {
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedColor = el.dataset.color;
+}
+window.addTeam = async function() {
+  const inp = document.getElementById('teamNameInput');
+  const name = inp.value.trim();
+  if (!name) return;
+  const id = 't' + Date.now();
+  await pushData('teams/' + id, { name, color: selectedColor, members: {} });
+  await pushData('scores/' + id, 0);
+  inp.value = '';
+}
+window.deleteTeam = async function(id) {
+  await pushData('teams/' + id, null);
+  await pushData('scores/' + id, null);
+}
+
+// ── TEAM ASSIGNMENT ──
+window.removeMemberFromTeam = async function(memberId, teamId) {
+  await pushData('teams/' + teamId + '/members/' + memberId, null);
+}
+async function assignMemberToTeam(memberId, teamId) {
+  // Remove from all teams first
+  for (const t of teamsArray()) {
+    if (t.members.includes(memberId)) await pushData('teams/' + t.id + '/members/' + memberId, null);
+  }
+  if (teamId !== 'unassigned') await pushData('teams/' + teamId + '/members/' + memberId, true);
+}
+
+// ── DRAG & DROP ──
+function startDrag(e, memberId) {
+  dragItem = memberId;
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onDragOver(e, targetId) {
+  e.preventDefault();
+  document.querySelectorAll('.team-card').forEach(c => c.classList.remove('drag-target'));
+  const card = document.querySelector(`[data-teamid="${targetId}"]`);
+  if (card) card.classList.add('drag-target');
+}
+async function onDropTeam(e, targetTeamId) {
+  e.preventDefault();
+  document.querySelectorAll('.team-card').forEach(c => c.classList.remove('drag-target'));
+  if (!dragItem) return;
+  await assignMemberToTeam(dragItem, targetTeamId);
+  dragItem = null;
+}
+async function onDropUnassigned(e) {
+  e.preventDefault();
+  if (!dragItem) return;
+  await assignMemberToTeam(dragItem, 'unassigned');
+  dragItem = null;
+}
+
+// ── SCORES ──
+let scoreModeTeam = true;
+window.switchScoreMode = function(mode, el) {
+  scoreModeTeam = mode === 'team';
+  document.querySelectorAll('#page-scores .toggle-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('score-team-area').style.display = scoreModeTeam ? '' : 'none';
+  document.getElementById('score-player-area').style.display = scoreModeTeam ? 'none' : '';
+}
+window.adjTeamScore = function(teamId, delta) {
+  const inp = document.getElementById('ts_' + teamId);
+  if (inp) inp.value = Math.max(0, parseInt(inp.value || '0') + delta);
+}
+window.saveScores = async function() {
+  const btn = document.getElementById('saveBtn');
+  btn.innerHTML = '<span class="spinner"></span> Saving…';
+  btn.disabled = true;
+  const teams = teamsArray();
+  for (const t of teams) {
+    const inp = document.getElementById('ts_' + t.id);
+    if (inp) await pushData('scores/' + t.id, parseInt(inp.value) || 0);
+  }
+  for (const m of membersArray()) {
+    const inp = document.getElementById('ps_' + m.id);
+    if (inp) await pushData('playerScores/' + m.id, parseInt(inp.value) || 0);
+  }
+  btn.innerHTML = '💾 Save Scores';
+  btn.disabled = false;
+  toast('Scores saved & synced ✓');
+}
+
+// ── RENDER DASHBOARD ──
+let lbMode = 'team';
+window.switchLB = function(mode, el) {
+  lbMode = mode;
+  document.querySelectorAll('#page-dashboard .toggle-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('lb-team').style.display   = mode === 'team'   ? '' : 'none';
+  document.getElementById('lb-player').style.display = mode === 'player' ? '' : 'none';
+}
+function renderDashboard() {
+  const teams = teamsArray();
+  const members = membersArray();
+
+  // Team LB
+  const tlb = document.getElementById('lb-team');
+  if (teams.length === 0) {
+    tlb.innerHTML = '<div class="empty"><div class="empty-icon">🏆</div>No teams set up yet</div>';
+  } else {
+    const sorted = [...teams].sort((a,b) => (state.scores[b.id]||0) - (state.scores[a.id]||0));
+    const max = Math.max(...sorted.map(t => state.scores[t.id]||0), 1);
+    tlb.innerHTML = sorted.map((t,i) => {
+      const sc = state.scores[t.id] || 0;
+      const pct = Math.round((sc/max)*100);
+      const rc = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+      return `<div class="lb-row" style="border-left-color:${t.color}">
+        <div class="lb-rank ${rc}">${i+1}</div>
+        <div class="lb-info">
+          <div class="lb-name" style="color:${t.color}">${esc(t.name)}</div>
+          <div class="lb-sub">${t.members.length} member${t.members.length!==1?'s':''}</div>
+          <div class="lb-bar"><div class="lb-bar-fill" style="width:${pct}%;background:${t.color}"></div></div>
+        </div>
+        <div class="lb-score" style="color:${t.color}">${sc}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Player LB
+  const plb = document.getElementById('lb-player');
+  if (members.length === 0) {
+    plb.innerHTML = '<div class="empty"><div class="empty-icon">👤</div>No members yet</div>';
+  } else {
+    const sorted = [...members].sort((a,b) => (state.playerScores[b.id]||0)-(state.playerScores[a.id]||0));
+    const max = Math.max(...sorted.map(m => state.playerScores[m.id]||0), 1);
+    plb.innerHTML = sorted.map((m,i) => {
+      const sc = state.playerScores[m.id] || 0;
+      const team = getMemberTeam(m.id);
+      const color = team ? team.color : 'var(--muted)';
+      const pct = Math.round((sc/max)*100);
+      const rc = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+      return `<div class="lb-row" style="border-left-color:${color}">
+        <div class="lb-rank ${rc}">${i+1}</div>
+        <div class="lb-info">
+          <div class="lb-name">${esc(m.name)}</div>
+          <div class="lb-sub">${team ? `<span style="color:${team.color}">${esc(team.name)}</span>` : 'Unassigned'}</div>
+          <div class="lb-bar"><div class="lb-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        </div>
+        <div class="lb-score" style="color:${color}">${sc}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+// ── RENDER TEAMS ──
+function renderTeamsPage() {
+  const teams = teamsArray();
+  const unassigned = getUnassigned();
+  const pool = document.getElementById('unassigned-pool');
+  document.getElementById('unassignedCount').textContent = unassigned.length;
+
+  if (unassigned.length === 0) {
+    pool.innerHTML = '<div class="empty" style="padding:14px;font-size:13px">✅ All members assigned!</div>';
+  } else {
+    pool.innerHTML = unassigned.map(m => `
+      <div class="member-item" draggable="${isAdmin}" ondragstart="startDrag(event,'${m.id}')">
+        <div class="member-left">
+          <div class="member-avatar">${initials(m.name)}</div>
+          <span class="member-name">${esc(m.name)}</span>
+        </div>
+        ${isAdmin ? '<span style="color:var(--muted);font-size:16px">⠿</span>' : ''}
+      </div>`).join('');
+  }
+  pool.ondragover = e => e.preventDefault();
+  pool.ondrop = onDropUnassigned;
+
+  const area = document.getElementById('teams-area');
+  const noMsg = document.getElementById('no-teams-msg');
+  if (teams.length === 0) { area.innerHTML=''; noMsg.style.display=''; return; }
+  noMsg.style.display = 'none';
+  area.innerHTML = teams.map(t => {
+    const tMembers = t.members.map(mid => membersArray().find(m=>m.id===mid)).filter(Boolean);
+    return `<div class="team-card" data-teamid="${t.id}"
+        ondragover="onDragOver(event,'${t.id}')"
+        ondrop="onDropTeam(event,'${t.id}')">
+      <div class="team-header" style="background:${t.color}18;border-bottom:1px solid ${t.color}30">
+        <div class="team-color-dot" style="background:${t.color}"></div>
+        <div class="team-name-display" style="color:${t.color}">${esc(t.name)}</div>
+        <div class="team-count">${tMembers.length}/5</div>
+      </div>
+      <div class="team-members-drop">
+        ${tMembers.length === 0
+          ? `<div class="drop-hint">${isAdmin ? 'Drop members here…' : 'No members yet'}</div>`
+          : tMembers.map(m => `
+            <div class="team-member-chip" style="background:${t.color}22;color:${t.color}"
+              ${isAdmin ? `draggable="true" ondragstart="startDrag(event,'${m.id}')" onclick="removeMemberFromTeam('${m.id}','${t.id}')"` : ''}>
+              ${esc(m.name)} ${isAdmin ? '<span class="chip-x">✕</span>' : ''}
+            </div>`).join('')
+        }
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER SCORES ──
+function renderScores() {
+  const locked  = document.getElementById('scores-lock');
+  const content = document.getElementById('scores-content');
+  if (!isAdmin) { locked.style.display=''; content.style.display='none'; return; }
+  locked.style.display = 'none'; content.style.display = '';
+
+  const teams = teamsArray();
+  const ta = document.getElementById('score-team-area');
+  ta.innerHTML = teams.length === 0
+    ? '<div class="empty">Create teams in Setup first</div>'
+    : teams.map(t => `
+      <div class="score-team-row">
+        <div class="score-left">
+          <div class="score-dot" style="background:${t.color}"></div>
+          <div class="score-name">${esc(t.name)}</div>
+        </div>
+        <div class="score-controls">
+          <button class="score-btn" onclick="adjTeamScore('${t.id}',-1)">−</button>
+          <input class="score-input-field" type="number" id="ts_${t.id}" value="${state.scores[t.id]||0}" min="0">
+          <button class="score-btn" onclick="adjTeamScore('${t.id}',1)">+</button>
+        </div>
+      </div>`).join('');
+
+  const pa = document.getElementById('score-player-area');
+  const members = membersArray();
+  pa.innerHTML = members.length === 0
+    ? '<div class="empty">Add members in Setup first</div>'
+    : members.map(m => {
+        const team = getMemberTeam(m.id);
+        return `<div class="player-score-row">
+          <div class="member-avatar" style="${team?`background:${team.color}22;border-color:${team.color}`:'border-color:var(--border)'};width:26px;height:26px;font-size:10px">${initials(m.name)}</div>
+          <div class="player-score-name">${esc(m.name)}</div>
+          ${team ? `<span class="player-score-team" style="background:${team.color}22;color:${team.color}">${esc(team.name)}</span>` : ''}
+          <input class="player-score-input" type="number" id="ps_${m.id}" value="${state.playerScores[m.id]||0}" min="0">
+        </div>`;
+      }).join('');
+}
+
+// ── RENDER SETUP ──
+function renderSetup() {
+  const locked  = document.getElementById('setup-lock');
+  const content = document.getElementById('setup-content');
+  if (!isAdmin) { locked.style.display=''; content.style.display='none'; return; }
+  locked.style.display='none'; content.style.display='';
+
+  const members = membersArray();
+  document.getElementById('memberCount').textContent = members.length;
+  const ml = document.getElementById('member-list-setup');
+  ml.innerHTML = members.length === 0
+    ? '<div class="empty" style="padding:14px">No members yet</div>'
+    : members.map(m => {
+        const team = getMemberTeam(m.id);
+        return `<div class="member-item" style="cursor:default">
+          <div class="member-left">
+            <div class="member-avatar" style="${team?`background:${team.color}22;border-color:${team.color}`:''}">
+              ${initials(m.name)}</div>
+            <span class="member-name">${esc(m.name)}</span>
+          </div>
+          <div class="flex-row">
+            ${team ? `<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:${team.color}22;color:${team.color}">${esc(team.name)}</span>` : ''}
+            <button class="btn btn-ghost btn-sm" onclick="deleteMember('${m.id}')">✕</button>
+          </div>
+        </div>`;
+      }).join('');
+
+  const teams = teamsArray();
+  const tl = document.getElementById('teams-list-setup');
+  tl.innerHTML = teams.length === 0
+    ? '<div style="color:var(--muted);font-size:13px">No teams created</div>'
+    : teams.map(t => `
+      <div class="flex-between mb-8" style="padding:10px 12px;background:var(--surface2);border-radius:8px;border-left:4px solid ${t.color}">
+        <div class="flex-row">
+          <div class="team-color-dot" style="background:${t.color}"></div>
+          <span style="font-weight:700">${esc(t.name)}</span>
+          <span style="font-size:11px;color:var(--muted)">${t.members.length} members</span>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="deleteTeam('${t.id}')">Delete</button>
+      </div>`).join('');
+}
+
+// ── KICK OFF ──
+initFirebase();
+</script>
+</body>
+</html>
