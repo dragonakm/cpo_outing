@@ -491,7 +491,18 @@ import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/fir
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // STEP 1: Paste your Firebase config here
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const firebaseConfig = PASTE_YOUR_FIREBASE_CONFIG_HERE;
+const firebaseConfig = {
+  apiKey: "AIzaSyAd7kCGu3RBGdrWez6xWBxQ_KFn3obWZTs",
+  authDomain: "cpo-outing-may2026.firebaseapp.com",
+  databaseURL: "https://cpo-outing-may2026-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "cpo-outing-may2026",
+  storageBucket: "cpo-outing-may2026.firebasestorage.app",
+  messagingSenderId: "97730254267",
+  appId: "1:97730254267:web:4ab4d4d9c48cfcaf8c609e"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);;
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const PASSCODE = 'aajks2026';
