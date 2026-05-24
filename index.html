@@ -17,134 +17,45 @@
     --danger: #ff4f4f;
     --success: #3ddc84;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── HEADER ── */
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 16px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .header-inner {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  .logo-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 1.5px;
-    color: var(--accent);
-    line-height: 1.2;
-  }
-  .logo-subtitle {
-    font-size: 11px;
-    font-style: italic;
-    color: var(--muted);
-    line-height: 1.4;
-    margin-top: 3px;
-    max-width: 280px;
-  }
+  /* HEADER */
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .logo-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1.5px; color: var(--accent); line-height: 1.2; }
+  .logo-subtitle { font-size: 11px; font-style: italic; color: var(--muted); line-height: 1.4; margin-top: 3px; max-width: 270px; }
   .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .admin-badge {
-    font-size: 10px; font-weight: 700; padding: 3px 8px;
-    background: var(--accent); color: #0a0a0f;
-    border-radius: 4px; letter-spacing: 0.5px; display: none;
-  }
-  .sync-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--muted); flex-shrink: 0;
-    transition: background 0.3s;
-  }
+  .admin-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; background: var(--accent); color: #0a0a0f; border-radius: 4px; letter-spacing: 0.5px; display: none; }
+  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex-shrink: 0; transition: background 0.3s; }
   .sync-dot.live { background: var(--success); box-shadow: 0 0 6px var(--success); }
   .sync-dot.error { background: var(--danger); }
 
-  /* ── NAV ── */
-  nav {
-    display: flex;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 73px;
-    z-index: 99;
-  }
-  .tab {
-    flex: 1;
-    padding: 10px 4px;
-    text-align: center;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: var(--muted);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
-  }
+  /* NAV */
+  nav { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 73px; z-index: 99; }
+  .tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
   .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
   .tab-icon { font-size: 17px; display: block; margin-bottom: 2px; }
 
-  /* ── MAIN ── */
+  /* MAIN */
   main { padding: 16px; max-width: 600px; margin: 0 auto; }
   .page { display: none; }
   .page.active { display: block; }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
-    letter-spacing: 2px;
-    color: var(--accent);
-    margin-bottom: 2px;
-  }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: var(--accent); margin-bottom: 2px; }
   .section-sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
 
-  /* ── FIREBASE CONFIG BANNER ── */
-  .config-banner {
-    background: #1a1208;
-    border: 1px solid #f5c84240;
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-bottom: 16px;
-    font-size: 13px;
-  }
+  /* FIREBASE BANNER */
+  .config-banner { background: #1a1208; border: 1px solid #f5c84240; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
   .config-banner strong { color: var(--accent); }
   .config-step { margin-top: 8px; color: var(--muted); line-height: 1.6; }
-  .config-step code {
-    background: var(--surface2); color: var(--text);
-    padding: 1px 6px; border-radius: 4px; font-size: 12px;
-  }
+  .config-step code { background: var(--surface2); color: var(--text); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
 
-  /* ── CARDS ── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-  }
+  /* CARDS */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
   .card-title { font-weight: 700; font-size: 14px; margin-bottom: 12px; }
 
-  /* ── BUTTONS ── */
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 18px; border-radius: 8px;
-    font-size: 13px; font-weight: 600; cursor: pointer;
-    border: none; transition: all 0.15s;
-    font-family: 'DM Sans', sans-serif;
-  }
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
   .btn-primary { background: var(--accent); color: #0a0a0f; }
   .btn-primary:active { opacity: 0.85; transform: scale(0.97); }
   .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
@@ -152,90 +63,60 @@
   .btn-sm { padding: 6px 12px; font-size: 12px; }
   .btn-full { width: 100%; justify-content: center; }
 
-  /* ── INPUTS ── */
-  .input {
-    width: 100%; padding: 10px 14px;
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 8px; color: var(--text);
-    font-size: 14px; font-family: 'DM Sans', sans-serif;
-    outline: none; transition: border-color 0.2s;
-  }
+  /* INPUTS */
+  .input { width: 100%; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
   .input:focus { border-color: var(--accent); }
   .input-row { display: flex; gap: 8px; margin-bottom: 12px; }
   .input-row .input { margin-bottom: 0; }
 
-  /* ── MEMBER LIST ── */
-  .member-list { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
-  .member-item {
+  /* MEMBER LIST */
+  .member-list { display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
+  .member-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--surface2); border-radius: 8px; border: 1px solid var(--border); font-size: 14px; transition: all 0.15s; }
+  .member-left { display: flex; align-items: center; gap: 10px; }
+  .member-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; flex-shrink: 0; background: var(--surface); border: 2px solid var(--border); }
+  .member-name { font-weight: 500; }
+
+  /* ASSIGN MEMBER LIST — tappable */
+  .assign-member-item {
     display: flex; align-items: center; justify-content: space-between;
     padding: 10px 12px; background: var(--surface2);
     border-radius: 8px; border: 1px solid var(--border);
-    font-size: 14px; cursor: grab; transition: all 0.15s;
+    font-size: 13px; cursor: pointer; transition: all 0.15s;
+    margin-bottom: 6px;
   }
-  .member-item:active { opacity: 0.7; transform: scale(0.98); }
-  .member-left { display: flex; align-items: center; gap: 10px; }
-  .member-avatar {
-    width: 30px; height: 30px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 11px; flex-shrink: 0;
-    background: var(--surface); border: 2px solid var(--border);
-  }
-  .member-name { font-weight: 500; }
+  .assign-member-item:active { opacity: 0.7; }
+  .assign-member-item.assigned { opacity: 0.45; cursor: default; }
+  .assign-member-item .assign-action { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: var(--accent); color: #0a0a0f; flex-shrink: 0; }
+  .assign-member-item.assigned .assign-action { background: var(--surface); color: var(--muted); }
 
-  /* ── TEAMS ── */
-  .teams-grid { display: grid; gap: 12px; }
-  .team-card {
-    background: var(--surface); border-radius: 12px;
-    border: 2px solid var(--border); overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .team-card.drag-target { border-color: var(--accent); }
-  .team-header {
-    padding: 12px 14px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
+  /* TEAM CARDS — read-only (Teams tab) */
+  .team-card-ro { background: var(--surface); border-radius: 12px; border: 2px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+  .team-header-ro { padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
   .team-color-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-  .team-name-display {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px; letter-spacing: 1px;
-    flex: 1; margin: 0 10px;
-  }
-  .team-count { font-size: 11px; color: var(--muted); }
-  .team-members-drop {
-    min-height: 44px; padding: 6px 10px 10px;
-    display: flex; flex-wrap: wrap; gap: 6px;
-  }
-  .team-member-chip {
-    padding: 3px 10px; border-radius: 20px;
-    font-size: 11px; font-weight: 600;
-    background: var(--surface2); cursor: pointer;
-    transition: all 0.15s;
-    display: flex; align-items: center; gap: 5px;
-  }
-  .team-member-chip:active { opacity: 0.6; }
-  .chip-x { color: var(--muted); font-size: 10px; }
-  .drop-hint { color: var(--muted); font-size: 12px; padding: 8px 0; }
+  .team-name-ro { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; flex: 1; }
+  .team-member-count { font-size: 11px; color: var(--muted); }
+  .team-members-ro { padding: 0 12px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .member-chip-ro { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .no-members-hint { color: var(--muted); font-size: 12px; padding: 0 0 8px; }
 
-  /* ── COLOR SWATCHES ── */
+  /* TEAM CARDS — setup (with assign) */
+  .team-card-setup { background: var(--surface); border-radius: 12px; border: 2px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+  .team-header-setup { padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+  .team-name-setup { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; flex: 1; }
+  .team-members-setup { padding: 0 12px 4px; display: flex; flex-wrap: wrap; gap: 6px; min-height: 32px; }
+  .team-member-chip-setup { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 5px; cursor: pointer; transition: opacity 0.15s; }
+  .team-member-chip-setup:active { opacity: 0.6; }
+  .chip-x { color: rgba(0,0,0,0.4); font-size: 10px; }
+  .team-assign-btn { margin: 0 12px 12px; }
+
+  /* COLOR SWATCHES */
   .color-picker-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-  .color-swatch {
-    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
-    border: 3px solid transparent; transition: all 0.15s;
-  }
+  .color-swatch { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.15s; }
   .color-swatch.selected { border-color: #fff; transform: scale(1.2); }
 
-  /* ── LEADERBOARD ── */
-  .lb-row {
-    display: flex; align-items: center;
-    padding: 12px 14px; border-radius: 10px; margin-bottom: 8px;
-    background: var(--surface2); gap: 12px;
-    position: relative; overflow: hidden;
-    border-left: 3px solid transparent;
-  }
-  .lb-rank {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px; width: 26px; text-align: center; flex-shrink: 0;
-  }
+  /* LEADERBOARD */
+  .lb-row { display: flex; align-items: center; padding: 12px 14px; border-radius: 10px; margin-bottom: 8px; background: var(--surface2); gap: 12px; border-left: 3px solid transparent; }
+  .lb-rank { font-family: 'Bebas Neue', sans-serif; font-size: 22px; width: 26px; text-align: center; flex-shrink: 0; }
   .lb-rank.gold { color: #f5c842; }
   .lb-rank.silver { color: #c0c0c0; }
   .lb-rank.bronze { color: #cd7f32; }
@@ -246,62 +127,32 @@
   .lb-bar { height: 3px; background: var(--surface); border-radius: 2px; margin-top: 5px; overflow: hidden; }
   .lb-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
 
-  /* ── SCORE ENTRY ── */
-  .score-team-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 14px; background: var(--surface2);
-    border-radius: 10px; margin-bottom: 8px;
-  }
+  /* SCORE ENTRY */
+  .score-team-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--surface2); border-radius: 10px; margin-bottom: 8px; }
   .score-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
   .score-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .score-name { font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .score-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-  .score-btn {
-    width: 30px; height: 30px; border-radius: 7px;
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--text); font-size: 17px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'DM Sans', sans-serif; font-weight: 700;
-    transition: all 0.15s;
-  }
+  .score-btn { width: 32px; height: 32px; border-radius: 7px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif; font-weight: 700; transition: all 0.15s; }
   .score-btn:active { background: var(--border); transform: scale(0.9); }
-  .score-input-field {
-    width: 56px; padding: 5px 6px; text-align: center;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 6px; color: var(--text);
-    font-size: 16px; font-weight: 700;
-    font-family: 'DM Sans', sans-serif; outline: none;
-  }
-  .score-input-field:focus { border-color: var(--accent); }
+  .score-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; min-width: 48px; text-align: center; }
 
-  /* ── PLAYER SCORE ROW ── */
-  .player-score-row {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 10px; border-radius: 8px;
-    background: var(--surface2); margin-bottom: 6px;
-  }
+  /* PLAYER SCORE ROW */
+  .player-score-row { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; background: var(--surface2); margin-bottom: 6px; }
   .player-score-name { flex: 1; font-size: 13px; font-weight: 500; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .player-score-team { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 600; flex-shrink: 0; }
-  .player-score-input {
-    width: 56px; padding: 5px 6px; text-align: center;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 6px; color: var(--text);
-    font-size: 14px; font-weight: 600;
-    font-family: 'DM Sans', sans-serif; outline: none; flex-shrink: 0;
-  }
-  .player-score-input:focus { border-color: var(--accent); }
+  .player-score-controls { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .player-score-val { font-family: 'Bebas Neue', sans-serif; font-size: 20px; min-width: 40px; text-align: center; }
 
-  /* ── TOGGLE ── */
+  /* ASSIGN MODAL */
+  .assign-list { max-height: 55vh; overflow-y: auto; margin-top: 12px; }
+
+  /* TOGGLE */
   .toggle-row { display: flex; gap: 8px; margin-bottom: 14px; }
-  .toggle-btn {
-    flex: 1; padding: 8px; text-align: center; border-radius: 8px;
-    font-size: 12px; font-weight: 600; cursor: pointer;
-    background: var(--surface2); border: 1px solid var(--border);
-    color: var(--muted); transition: all 0.2s;
-  }
+  .toggle-btn { flex: 1; padding: 8px; text-align: center; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); transition: all 0.2s; }
   .toggle-btn.active { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
 
-  /* ── MISC ── */
+  /* MISC */
   .flex-row { display: flex; align-items: center; gap: 8px; }
   .flex-between { display: flex; align-items: center; justify-content: space-between; }
   .mt-8 { margin-top: 8px; }
@@ -311,36 +162,20 @@
   .label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
   .empty { text-align: center; padding: 28px 16px; color: var(--muted); font-size: 13px; }
   .empty-icon { font-size: 36px; margin-bottom: 8px; }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
 
-  .toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-    background: var(--success); color: #0a0a0f;
-    padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 700;
-    z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    white-space: nowrap;
-  }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--success); color: #0a0a0f; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 700; z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s; white-space: nowrap; }
   .toast.show { opacity: 1; }
 
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-    z-index: 200; display: flex; align-items: flex-end; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.25s;
-  }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
   .modal-overlay.show { opacity: 1; pointer-events: all; }
-  .modal {
-    background: var(--surface); border-radius: 20px 20px 0 0;
-    padding: 24px 20px 36px; width: 100%; max-width: 600px;
-    transform: translateY(100%); transition: transform 0.3s ease;
-  }
+  .modal { background: var(--surface); border-radius: 20px 20px 0 0; padding: 24px 20px 36px; width: 100%; max-width: 600px; transform: translateY(100%); transition: transform 0.3s ease; max-height: 85vh; overflow-y: auto; }
   .modal-overlay.show .modal { transform: translateY(0); }
   .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
-  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 16px; }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 4px; }
+  .modal-sub { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
 
-  .spinner {
-    width: 18px; height: 18px; border: 2px solid var(--border);
-    border-top-color: var(--accent); border-radius: 50%;
-    animation: spin 0.7s linear infinite; display: inline-block;
-  }
+  .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
@@ -368,7 +203,6 @@
 
 <main>
 
-  <!-- ── FIREBASE NOT CONFIGURED BANNER ── -->
   <div id="firebaseBanner" class="config-banner" style="display:none">
     <strong>⚠️ Firebase not configured yet</strong>
     <div class="config-step">
@@ -379,7 +213,7 @@
     </div>
   </div>
 
-  <!-- ═══ DASHBOARD ═══ -->
+  <!-- ═══ TAB 1: DASHBOARD (everyone) ═══ -->
   <div id="page-dashboard" class="page active">
     <div class="section-title">Leaderboard</div>
     <div class="section-sub">Live standings · updates in real time</div>
@@ -391,21 +225,17 @@
     <div id="lb-player" style="display:none"></div>
   </div>
 
-  <!-- ═══ TEAMS ═══ -->
+  <!-- ═══ TAB 2: TEAMS — read-only for all ═══ -->
   <div id="page-teams" class="page">
     <div class="section-title">Teams</div>
-    <div class="section-sub">Drag members from pool into a team · tap chip to remove</div>
-    <div class="card">
-      <div class="label">Unassigned (<span id="unassignedCount">0</span>)</div>
-      <div id="unassigned-pool" class="member-list"></div>
-    </div>
-    <div id="teams-area" class="teams-grid"></div>
-    <div id="no-teams-msg" class="empty" style="display:none">
-      <div class="empty-icon">👥</div>Create teams in Setup first
+    <div class="section-sub">Team colours & members</div>
+    <div id="teams-ro-area"></div>
+    <div id="teams-ro-empty" class="empty" style="display:none">
+      <div class="empty-icon">👥</div>No teams set up yet
     </div>
   </div>
 
-  <!-- ═══ SCORES ═══ -->
+  <!-- ═══ TAB 3: SCORES — admin only ═══ -->
   <div id="page-scores" class="page">
     <div id="scores-lock" class="empty">
       <div class="empty-icon">🔒</div>Admin access required
@@ -413,7 +243,7 @@
     </div>
     <div id="scores-content" style="display:none">
       <div class="section-title">Scores</div>
-      <div class="section-sub">Enter points · saved instantly to all devices</div>
+      <div class="section-sub">Points in steps of 10 · save all at once</div>
       <div class="toggle-row">
         <div class="toggle-btn active" onclick="switchScoreMode('team',this)">By Team</div>
         <div class="toggle-btn" onclick="switchScoreMode('player',this)">By Player</div>
@@ -421,12 +251,12 @@
       <div id="score-team-area"></div>
       <div id="score-player-area" style="display:none"></div>
       <div class="mt-16">
-        <button class="btn btn-primary btn-full" id="saveBtn" onclick="saveScores()">💾 Save Scores</button>
+        <button class="btn btn-primary btn-full" id="saveBtn" onclick="saveScores()">💾 Save All Scores</button>
       </div>
     </div>
   </div>
 
-  <!-- ═══ SETUP ═══ -->
+  <!-- ═══ TAB 4: SETUP — admin only ═══ -->
   <div id="page-setup" class="page">
     <div id="setup-lock" class="empty">
       <div class="empty-icon">🔒</div>Admin access required
@@ -434,20 +264,21 @@
     </div>
     <div id="setup-content" style="display:none">
       <div class="section-title">Setup</div>
-      <div class="section-sub">Members & Teams</div>
+      <div class="section-sub">Members, Teams & Assignments</div>
 
+      <!-- Members -->
       <div class="card">
-        <div class="card-title">👤 Add Members</div>
+        <div class="card-title">👤 Members (<span id="memberCount">0</span>)</div>
         <div class="input-row">
           <input id="memberInput" class="input" type="text" placeholder="Full name…" onkeydown="if(event.key==='Enter')addMember()">
           <button class="btn btn-primary" onclick="addMember()">Add</button>
         </div>
-        <div class="label">All Members (<span id="memberCount">0</span>)</div>
         <div id="member-list-setup" class="member-list"></div>
       </div>
 
+      <!-- Teams + assign -->
       <div class="card mt-8">
-        <div class="card-title">🎨 Create Teams</div>
+        <div class="card-title">🎨 Teams & Assignments</div>
         <div class="input-row">
           <input id="teamNameInput" class="input" type="text" placeholder="Team name…" onkeydown="if(event.key==='Enter')addTeam()">
           <button class="btn btn-primary" onclick="addTeam()">Create</button>
@@ -462,344 +293,330 @@
           <div class="color-swatch" style="background:#4f8aff" data-color="#4f8aff" onclick="selectColor(this)"></div>
           <div class="color-swatch" style="background:#a855f7" data-color="#a855f7" onclick="selectColor(this)"></div>
         </div>
-        <div id="teams-list-setup" class="mt-16"></div>
+        <div class="divider"></div>
+        <div id="teams-setup-area"></div>
+        <div id="teams-setup-empty" style="color:var(--muted);font-size:13px;display:none">No teams created yet</div>
       </div>
     </div>
   </div>
 
 </main>
 
-<!-- Admin Modal -->
+<!-- Admin login modal -->
 <div class="modal-overlay" id="adminModal" onclick="closeAdminModal(event)">
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">Admin Login</div>
-    <div class="label">Passcode</div>
+    <div class="label mt-8">Passcode</div>
     <input id="adminPassInput" class="input mb-12" type="password" placeholder="Enter passcode…" onkeydown="if(event.key==='Enter')verifyAdmin()">
     <button class="btn btn-primary btn-full" onclick="verifyAdmin()">Unlock</button>
     <div id="adminError" style="color:var(--danger);font-size:13px;margin-top:10px;text-align:center;display:none">Incorrect passcode</div>
   </div>
 </div>
 
+<!-- Assign members modal -->
+<div class="modal-overlay" id="assignModal" onclick="closeAssignModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="assignModalTitle">Assign Members</div>
+    <div class="modal-sub" id="assignModalSub"></div>
+    <div class="label mt-8">Tap a member to add · tap chip on team to remove</div>
+    <div class="assign-list" id="assignModalList"></div>
+    <div class="mt-16">
+      <button class="btn btn-primary btn-full" onclick="closeAssignModalDirect()">Done</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// STEP 1: Paste your Firebase config here
+// Paste your Firebase config here
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const firebaseConfig = {
-  apiKey: "AIzaSyAd7kCGu3RBGdrWez6xWBxQ_KFn3obWZTs",
-  authDomain: "cpo-outing-may2026.firebaseapp.com",
-  databaseURL: "https://cpo-outing-may2026-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "cpo-outing-may2026",
-  storageBucket: "cpo-outing-may2026.firebasestorage.app",
-  messagingSenderId: "97730254267",
-  appId: "1:97730254267:web:4ab4d4d9c48cfcaf8c609e"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);;
+const firebaseConfig = PASTE_YOUR_FIREBASE_CONFIG_HERE;
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const PASSCODE = 'aajks2026';
+const STEP = 10;
 
 let db = null;
 let isAdmin = false;
 let selectedColor = '#ff4f4f';
-let dragItem = null;
+let activeAssignTeamId = null;
 
-// Live state (synced from Firebase)
 let state = {
-  members: {},     // { id: { name } }
-  teams: {},       // { id: { name, color, members: {memberId: true} } }
-  scores: {},      // { teamId: number }
-  playerScores: {} // { memberId: number }
+  members: {},
+  teams: {},
+  scores: {},
+  playerScores: {}
 };
 
-// ── FIREBASE INIT ──
+// ── FIREBASE ──
 function initFirebase() {
   try {
     const app = initializeApp(firebaseConfig);
     db = getDatabase(app);
     setSyncStatus('live');
-    listenToData();
+    onValue(ref(db, 'torq03'), (snap) => {
+      const d = snap.val() || {};
+      state.members      = d.members      || {};
+      state.teams        = d.teams        || {};
+      state.scores       = d.scores       || {};
+      state.playerScores = d.playerScores || {};
+      setSyncStatus('live');
+      refreshCurrentPage();
+    }, () => setSyncStatus('error'));
     document.getElementById('firebaseBanner').style.display = 'none';
   } catch(e) {
-    console.error('Firebase init failed:', e);
     setSyncStatus('error');
     document.getElementById('firebaseBanner').style.display = '';
   }
 }
-
 function setSyncStatus(s) {
   const dot = document.getElementById('syncDot');
-  dot.className = 'sync-dot' + (s === 'live' ? ' live' : s === 'error' ? ' error' : '');
-  dot.title = s === 'live' ? 'Live sync' : s === 'error' ? 'Sync error' : 'Connecting…';
+  dot.className = 'sync-dot' + (s==='live'?' live':s==='error'?' error':'');
 }
-
-// ── REAL-TIME LISTENER ──
-function listenToData() {
-  if (!db) return;
-  onValue(ref(db, 'torq03'), (snap) => {
-    const data = snap.val() || {};
-    state.members     = data.members     || {};
-    state.teams       = data.teams       || {};
-    state.scores      = data.scores      || {};
-    state.playerScores= data.playerScores|| {};
-    setSyncStatus('live');
-    refreshCurrentPage();
-  }, (err) => {
-    setSyncStatus('error');
-  });
-}
-
 async function pushData(path, value) {
   if (!db) return;
-  try {
-    await set(ref(db, 'torq03/' + path), value);
-  } catch(e) {
-    toast('Sync error — check connection');
-    setSyncStatus('error');
-  }
+  try { await set(ref(db, 'torq03/'+path), value); }
+  catch(e) { toast('Sync error', 'var(--danger)'); setSyncStatus('error'); }
 }
 
 // ── HELPERS ──
-function initials(name) {
-  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+function initials(n){ return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(msg, color){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.background=color||'var(--success)';
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200);
 }
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function membersArray(){ return Object.entries(state.members).map(([id,v])=>({id,...v})); }
+function teamsArray(){
+  return Object.entries(state.teams).map(([id,v])=>({id,...v,members:Object.keys(v.members||{})}));
 }
-function toast(msg, color) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = color || 'var(--success)';
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-function membersArray() { return Object.entries(state.members).map(([id,v])=>({id,...v})); }
-function teamsArray()   { return Object.entries(state.teams).map(([id,v])=>({id,...v,members:Object.keys(v.members||{})})); }
-function getMemberTeam(memberId) {
-  return teamsArray().find(t => t.members.includes(memberId)) || null;
-}
-function getUnassigned() {
-  const assigned = new Set(teamsArray().flatMap(t=>t.members));
-  return membersArray().filter(m => !assigned.has(m.id));
-}
+function getMemberTeam(mid){ return teamsArray().find(t=>t.members.includes(mid))||null; }
 
 // ── TABS ──
-window.switchTab = function(name) {
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    t.classList.toggle('active', ['dashboard','teams','scores','setup'][i] === name);
+window.switchTab = function(name){
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active',['dashboard','teams','scores','setup'][i]===name);
   });
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
   renderPage(name);
 }
-function refreshCurrentPage() {
-  const active = document.querySelector('.page.active');
-  if (!active) return;
-  const id = active.id.replace('page-','');
-  renderPage(id);
+function refreshCurrentPage(){
+  const a=document.querySelector('.page.active');
+  if(a) renderPage(a.id.replace('page-',''));
+  // also refresh assign modal if open
+  if(activeAssignTeamId && document.getElementById('assignModal').classList.contains('show'))
+    renderAssignModal(activeAssignTeamId);
 }
-function renderPage(name) {
-  if (name === 'dashboard') renderDashboard();
-  if (name === 'teams')     renderTeamsPage();
-  if (name === 'scores')    renderScores();
-  if (name === 'setup')     renderSetup();
+function renderPage(n){
+  if(n==='dashboard') renderDashboard();
+  if(n==='teams')     renderTeamsRO();
+  if(n==='scores')    renderScores();
+  if(n==='setup')     renderSetup();
 }
 
 // ── ADMIN ──
-window.showAdminModal = function() {
-  document.getElementById('adminPassInput').value = '';
-  document.getElementById('adminError').style.display = 'none';
+window.showAdminModal = function(){
+  document.getElementById('adminPassInput').value='';
+  document.getElementById('adminError').style.display='none';
   document.getElementById('adminModal').classList.add('show');
-  setTimeout(() => document.getElementById('adminPassInput').focus(), 350);
+  setTimeout(()=>document.getElementById('adminPassInput').focus(),350);
 }
-window.closeAdminModal = function(e) {
-  if (e.target === document.getElementById('adminModal'))
+window.closeAdminModal = function(e){
+  if(e.target===document.getElementById('adminModal'))
     document.getElementById('adminModal').classList.remove('show');
 }
-window.verifyAdmin = function() {
-  if (document.getElementById('adminPassInput').value === PASSCODE) {
-    isAdmin = true;
+window.verifyAdmin = function(){
+  if(document.getElementById('adminPassInput').value===PASSCODE){
+    isAdmin=true;
     document.getElementById('adminModal').classList.remove('show');
-    document.getElementById('adminBadge').style.display = 'inline-block';
-    renderSetup(); renderScores();
+    document.getElementById('adminBadge').style.display='inline-block';
+    renderScores(); renderSetup();
     toast('Admin access granted ✓');
   } else {
-    document.getElementById('adminError').style.display = 'block';
+    document.getElementById('adminError').style.display='block';
   }
 }
 
 // ── SETUP: MEMBERS ──
-window.addMember = async function() {
-  const inp = document.getElementById('memberInput');
-  const name = inp.value.trim();
-  if (!name) return;
-  if (membersArray().find(m => m.name.toLowerCase() === name.toLowerCase())) {
-    toast('Already exists', 'var(--danger)'); return;
+window.addMember = async function(){
+  const inp=document.getElementById('memberInput');
+  const name=inp.value.trim(); if(!name) return;
+  if(membersArray().find(m=>m.name.toLowerCase()===name.toLowerCase())){
+    toast('Already exists','var(--danger)'); return;
   }
-  const id = 'm' + Date.now();
-  await pushData('members/' + id, { name });
-  inp.value = '';
+  await pushData('members/m'+Date.now(), {name});
+  inp.value='';
 }
-window.deleteMember = async function(id) {
-  await pushData('members/' + id, null);
-  // Remove from teams
-  for (const t of teamsArray()) {
-    if (t.members.includes(id)) await pushData('teams/' + t.id + '/members/' + id, null);
-  }
-  await pushData('playerScores/' + id, null);
+window.deleteMember = async function(id){
+  await pushData('members/'+id, null);
+  for(const t of teamsArray())
+    if(t.members.includes(id)) await pushData('teams/'+t.id+'/members/'+id, null);
+  await pushData('playerScores/'+id, null);
 }
 
 // ── SETUP: TEAMS ──
-window.selectColor = function(el) {
-  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedColor = el.dataset.color;
+window.selectColor = function(el){
+  document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected'); selectedColor=el.dataset.color;
 }
-window.addTeam = async function() {
-  const inp = document.getElementById('teamNameInput');
-  const name = inp.value.trim();
-  if (!name) return;
-  const id = 't' + Date.now();
-  await pushData('teams/' + id, { name, color: selectedColor, members: {} });
-  await pushData('scores/' + id, 0);
-  inp.value = '';
+window.addTeam = async function(){
+  const inp=document.getElementById('teamNameInput');
+  const name=inp.value.trim(); if(!name) return;
+  const id='t'+Date.now();
+  await pushData('teams/'+id, {name, color:selectedColor, members:{}});
+  await pushData('scores/'+id, 0);
+  inp.value='';
 }
-window.deleteTeam = async function(id) {
-  await pushData('teams/' + id, null);
-  await pushData('scores/' + id, null);
+window.deleteTeam = async function(id){
+  await pushData('teams/'+id, null);
+  await pushData('scores/'+id, null);
 }
 
-// ── TEAM ASSIGNMENT ──
-window.removeMemberFromTeam = async function(memberId, teamId) {
-  await pushData('teams/' + teamId + '/members/' + memberId, null);
+// ── ASSIGN MODAL ──
+window.openAssignModal = function(teamId){
+  activeAssignTeamId = teamId;
+  renderAssignModal(teamId);
+  document.getElementById('assignModal').classList.add('show');
 }
-async function assignMemberToTeam(memberId, teamId) {
-  // Remove from all teams first
-  for (const t of teamsArray()) {
-    if (t.members.includes(memberId)) await pushData('teams/' + t.id + '/members/' + memberId, null);
+window.closeAssignModal = function(e){
+  if(e.target===document.getElementById('assignModal')){
+    document.getElementById('assignModal').classList.remove('show');
+    activeAssignTeamId=null;
   }
-  if (teamId !== 'unassigned') await pushData('teams/' + teamId + '/members/' + memberId, true);
 }
-
-// ── DRAG & DROP ──
-function startDrag(e, memberId) {
-  dragItem = memberId;
-  e.dataTransfer.effectAllowed = 'move';
+window.closeAssignModalDirect = function(){
+  document.getElementById('assignModal').classList.remove('show');
+  activeAssignTeamId=null;
 }
-function onDragOver(e, targetId) {
-  e.preventDefault();
-  document.querySelectorAll('.team-card').forEach(c => c.classList.remove('drag-target'));
-  const card = document.querySelector(`[data-teamid="${targetId}"]`);
-  if (card) card.classList.add('drag-target');
+function renderAssignModal(teamId){
+  const team = teamsArray().find(t=>t.id===teamId);
+  if(!team) return;
+  document.getElementById('assignModalTitle').textContent = team.name;
+  document.getElementById('assignModalSub').textContent = `${team.members.length} member${team.members.length!==1?'s':''} assigned`;
+  const members = membersArray();
+  const list = document.getElementById('assignModalList');
+  if(members.length===0){
+    list.innerHTML='<div class="empty" style="padding:20px">Add members in Setup first</div>';
+    return;
+  }
+  list.innerHTML = members.map(m=>{
+    const memberTeam = getMemberTeam(m.id);
+    const inThisTeam = team.members.includes(m.id);
+    const inOtherTeam = memberTeam && !inThisTeam;
+    return `<div class="assign-member-item ${inThisTeam||inOtherTeam?'assigned':''}"
+      onclick="${inThisTeam?`removeMemberAssign('${m.id}','${teamId}')`:inOtherTeam?'':``assignMember('${m.id}','${teamId}')``}">
+      <div class="member-left">
+        <div class="member-avatar" style="${inThisTeam?`background:${team.color}22;border-color:${team.color}`:''}">
+          ${initials(m.name)}</div>
+        <div>
+          <div class="member-name">${esc(m.name)}</div>
+          ${inOtherTeam?`<div style="font-size:11px;color:var(--muted)">In ${esc(memberTeam.name)}</div>`:''}
+        </div>
+      </div>
+      <span class="assign-action">${inThisTeam?'Remove':inOtherTeam?'Taken':'+ Add'}</span>
+    </div>`;
+  }).join('');
 }
-async function onDropTeam(e, targetTeamId) {
-  e.preventDefault();
-  document.querySelectorAll('.team-card').forEach(c => c.classList.remove('drag-target'));
-  if (!dragItem) return;
-  await assignMemberToTeam(dragItem, targetTeamId);
-  dragItem = null;
+window.assignMember = async function(memberId, teamId){
+  await pushData('teams/'+teamId+'/members/'+memberId, true);
 }
-async function onDropUnassigned(e) {
-  e.preventDefault();
-  if (!dragItem) return;
-  await assignMemberToTeam(dragItem, 'unassigned');
-  dragItem = null;
+window.removeMemberAssign = async function(memberId, teamId){
+  await pushData('teams/'+teamId+'/members/'+memberId, null);
 }
 
 // ── SCORES ──
-let scoreModeTeam = true;
-window.switchScoreMode = function(mode, el) {
-  scoreModeTeam = mode === 'team';
-  document.querySelectorAll('#page-scores .toggle-btn').forEach(b => b.classList.remove('active'));
+let scoreModeTeam=true;
+// in-memory pending values (before save)
+let pendingTeamScores={};
+let pendingPlayerScores={};
+
+window.switchScoreMode = function(mode,el){
+  scoreModeTeam=mode==='team';
+  document.querySelectorAll('#page-scores .toggle-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('score-team-area').style.display = scoreModeTeam ? '' : 'none';
-  document.getElementById('score-player-area').style.display = scoreModeTeam ? 'none' : '';
-}
-window.adjTeamScore = function(teamId, delta) {
-  const inp = document.getElementById('ts_' + teamId);
-  if (inp) inp.value = Math.max(0, parseInt(inp.value || '0') + delta);
-}
-window.saveScores = async function() {
-  const btn = document.getElementById('saveBtn');
-  btn.innerHTML = '<span class="spinner"></span> Saving…';
-  btn.disabled = true;
-  const teams = teamsArray();
-  for (const t of teams) {
-    const inp = document.getElementById('ts_' + t.id);
-    if (inp) await pushData('scores/' + t.id, parseInt(inp.value) || 0);
-  }
-  for (const m of membersArray()) {
-    const inp = document.getElementById('ps_' + m.id);
-    if (inp) await pushData('playerScores/' + m.id, parseInt(inp.value) || 0);
-  }
-  btn.innerHTML = '💾 Save Scores';
-  btn.disabled = false;
-  toast('Scores saved & synced ✓');
+  document.getElementById('score-team-area').style.display=scoreModeTeam?'':'none';
+  document.getElementById('score-player-area').style.display=scoreModeTeam?'none':'';
 }
 
-// ── RENDER DASHBOARD ──
-let lbMode = 'team';
-window.switchLB = function(mode, el) {
-  lbMode = mode;
-  document.querySelectorAll('#page-dashboard .toggle-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('lb-team').style.display   = mode === 'team'   ? '' : 'none';
-  document.getElementById('lb-player').style.display = mode === 'player' ? '' : 'none';
-}
-function renderDashboard() {
-  const teams = teamsArray();
-  const members = membersArray();
-
-  // Team LB
-  const tlb = document.getElementById('lb-team');
-  if (teams.length === 0) {
-    tlb.innerHTML = '<div class="empty"><div class="empty-icon">🏆</div>No teams set up yet</div>';
+window.adjScore = function(key, isTeam, delta){
+  if(isTeam){
+    pendingTeamScores[key] = Math.max(0, (pendingTeamScores[key]??parseInt(state.scores[key]||0)) + delta);
+    const el=document.getElementById('sv_'+key);
+    if(el) el.textContent=pendingTeamScores[key];
   } else {
-    const sorted = [...teams].sort((a,b) => (state.scores[b.id]||0) - (state.scores[a.id]||0));
-    const max = Math.max(...sorted.map(t => state.scores[t.id]||0), 1);
-    tlb.innerHTML = sorted.map((t,i) => {
-      const sc = state.scores[t.id] || 0;
-      const pct = Math.round((sc/max)*100);
-      const rc = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    pendingPlayerScores[key] = Math.max(0, (pendingPlayerScores[key]??parseInt(state.playerScores[key]||0)) + delta);
+    const el=document.getElementById('pv_'+key);
+    if(el) el.textContent=pendingPlayerScores[key];
+  }
+}
+
+window.saveScores = async function(){
+  const btn=document.getElementById('saveBtn');
+  btn.innerHTML='<span class="spinner"></span> Saving…'; btn.disabled=true;
+  for(const [id,val] of Object.entries(pendingTeamScores))
+    await pushData('scores/'+id, val);
+  for(const [id,val] of Object.entries(pendingPlayerScores))
+    await pushData('playerScores/'+id, val);
+  pendingTeamScores={}; pendingPlayerScores={};
+  btn.innerHTML='💾 Save All Scores'; btn.disabled=false;
+  toast('All scores saved & synced ✓');
+}
+
+// ── RENDER: DASHBOARD ──
+let lbMode='team';
+window.switchLB = function(mode,el){
+  lbMode=mode;
+  document.querySelectorAll('#page-dashboard .toggle-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('lb-team').style.display=mode==='team'?'':'none';
+  document.getElementById('lb-player').style.display=mode==='player'?'':'none';
+}
+function renderDashboard(){
+  const teams=teamsArray(), members=membersArray();
+  const tlb=document.getElementById('lb-team');
+  if(teams.length===0){ tlb.innerHTML='<div class="empty"><div class="empty-icon">🏆</div>No teams set up yet</div>'; }
+  else {
+    const sorted=[...teams].sort((a,b)=>(state.scores[b.id]||0)-(state.scores[a.id]||0));
+    const max=Math.max(...sorted.map(t=>state.scores[t.id]||0),1);
+    tlb.innerHTML=sorted.map((t,i)=>{
+      const sc=state.scores[t.id]||0;
+      const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
       return `<div class="lb-row" style="border-left-color:${t.color}">
         <div class="lb-rank ${rc}">${i+1}</div>
         <div class="lb-info">
           <div class="lb-name" style="color:${t.color}">${esc(t.name)}</div>
           <div class="lb-sub">${t.members.length} member${t.members.length!==1?'s':''}</div>
-          <div class="lb-bar"><div class="lb-bar-fill" style="width:${pct}%;background:${t.color}"></div></div>
+          <div class="lb-bar"><div class="lb-bar-fill" style="width:${Math.round((sc/max)*100)}%;background:${t.color}"></div></div>
         </div>
         <div class="lb-score" style="color:${t.color}">${sc}</div>
       </div>`;
     }).join('');
   }
-
-  // Player LB
-  const plb = document.getElementById('lb-player');
-  if (members.length === 0) {
-    plb.innerHTML = '<div class="empty"><div class="empty-icon">👤</div>No members yet</div>';
-  } else {
-    const sorted = [...members].sort((a,b) => (state.playerScores[b.id]||0)-(state.playerScores[a.id]||0));
-    const max = Math.max(...sorted.map(m => state.playerScores[m.id]||0), 1);
-    plb.innerHTML = sorted.map((m,i) => {
-      const sc = state.playerScores[m.id] || 0;
-      const team = getMemberTeam(m.id);
-      const color = team ? team.color : 'var(--muted)';
-      const pct = Math.round((sc/max)*100);
-      const rc = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+  const plb=document.getElementById('lb-player');
+  if(members.length===0){ plb.innerHTML='<div class="empty"><div class="empty-icon">👤</div>No members yet</div>'; }
+  else {
+    const sorted=[...members].sort((a,b)=>(state.playerScores[b.id]||0)-(state.playerScores[a.id]||0));
+    const max=Math.max(...sorted.map(m=>state.playerScores[m.id]||0),1);
+    plb.innerHTML=sorted.map((m,i)=>{
+      const sc=state.playerScores[m.id]||0;
+      const team=getMemberTeam(m.id);
+      const color=team?team.color:'var(--muted)';
+      const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
       return `<div class="lb-row" style="border-left-color:${color}">
         <div class="lb-rank ${rc}">${i+1}</div>
         <div class="lb-info">
           <div class="lb-name">${esc(m.name)}</div>
-          <div class="lb-sub">${team ? `<span style="color:${team.color}">${esc(team.name)}</span>` : 'Unassigned'}</div>
-          <div class="lb-bar"><div class="lb-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+          <div class="lb-sub">${team?`<span style="color:${team.color}">${esc(team.name)}</span>`:'Unassigned'}</div>
+          <div class="lb-bar"><div class="lb-bar-fill" style="width:${Math.round((sc/max)*100)}%;background:${color}"></div></div>
         </div>
         <div class="lb-score" style="color:${color}">${sc}</div>
       </div>`;
@@ -807,138 +624,139 @@ function renderDashboard() {
   }
 }
 
-// ── RENDER TEAMS ──
-function renderTeamsPage() {
-  const teams = teamsArray();
-  const unassigned = getUnassigned();
-  const pool = document.getElementById('unassigned-pool');
-  document.getElementById('unassignedCount').textContent = unassigned.length;
-
-  if (unassigned.length === 0) {
-    pool.innerHTML = '<div class="empty" style="padding:14px;font-size:13px">✅ All members assigned!</div>';
-  } else {
-    pool.innerHTML = unassigned.map(m => `
-      <div class="member-item" draggable="${isAdmin}" ondragstart="startDrag(event,'${m.id}')">
-        <div class="member-left">
-          <div class="member-avatar">${initials(m.name)}</div>
-          <span class="member-name">${esc(m.name)}</span>
-        </div>
-        ${isAdmin ? '<span style="color:var(--muted);font-size:16px">⠿</span>' : ''}
-      </div>`).join('');
-  }
-  pool.ondragover = e => e.preventDefault();
-  pool.ondrop = onDropUnassigned;
-
-  const area = document.getElementById('teams-area');
-  const noMsg = document.getElementById('no-teams-msg');
-  if (teams.length === 0) { area.innerHTML=''; noMsg.style.display=''; return; }
-  noMsg.style.display = 'none';
-  area.innerHTML = teams.map(t => {
-    const tMembers = t.members.map(mid => membersArray().find(m=>m.id===mid)).filter(Boolean);
-    return `<div class="team-card" data-teamid="${t.id}"
-        ondragover="onDragOver(event,'${t.id}')"
-        ondrop="onDropTeam(event,'${t.id}')">
-      <div class="team-header" style="background:${t.color}18;border-bottom:1px solid ${t.color}30">
+// ── RENDER: TEAMS (read-only) ──
+function renderTeamsRO(){
+  const teams=teamsArray();
+  const area=document.getElementById('teams-ro-area');
+  const empty=document.getElementById('teams-ro-empty');
+  if(teams.length===0){ area.innerHTML=''; empty.style.display=''; return; }
+  empty.style.display='none';
+  area.innerHTML=teams.map(t=>{
+    const tMembers=t.members.map(mid=>membersArray().find(m=>m.id===mid)).filter(Boolean);
+    return `<div class="team-card-ro" style="border-color:${t.color}40">
+      <div class="team-header-ro" style="background:${t.color}18;border-bottom:1px solid ${t.color}30">
         <div class="team-color-dot" style="background:${t.color}"></div>
-        <div class="team-name-display" style="color:${t.color}">${esc(t.name)}</div>
-        <div class="team-count">${tMembers.length}/5</div>
+        <div class="team-name-ro" style="color:${t.color}">${esc(t.name)}</div>
+        <div class="team-member-count">${tMembers.length} member${tMembers.length!==1?'s':''}</div>
       </div>
-      <div class="team-members-drop">
-        ${tMembers.length === 0
-          ? `<div class="drop-hint">${isAdmin ? 'Drop members here…' : 'No members yet'}</div>`
-          : tMembers.map(m => `
-            <div class="team-member-chip" style="background:${t.color}22;color:${t.color}"
-              ${isAdmin ? `draggable="true" ondragstart="startDrag(event,'${m.id}')" onclick="removeMemberFromTeam('${m.id}','${t.id}')"` : ''}>
-              ${esc(m.name)} ${isAdmin ? '<span class="chip-x">✕</span>' : ''}
-            </div>`).join('')
+      <div class="team-members-ro">
+        ${tMembers.length===0
+          ? `<div class="no-members-hint">No members assigned yet</div>`
+          : tMembers.map(m=>`<span class="member-chip-ro" style="background:${t.color}22;color:${t.color}">${esc(m.name)}</span>`).join('')
         }
       </div>
     </div>`;
   }).join('');
 }
 
-// ── RENDER SCORES ──
-function renderScores() {
-  const locked  = document.getElementById('scores-lock');
-  const content = document.getElementById('scores-content');
-  if (!isAdmin) { locked.style.display=''; content.style.display='none'; return; }
-  locked.style.display = 'none'; content.style.display = '';
+// ── RENDER: SCORES ──
+function renderScores(){
+  const locked=document.getElementById('scores-lock');
+  const content=document.getElementById('scores-content');
+  if(!isAdmin){ locked.style.display=''; content.style.display='none'; return; }
+  locked.style.display='none'; content.style.display='';
+  const teams=teamsArray(), members=membersArray();
 
-  const teams = teamsArray();
-  const ta = document.getElementById('score-team-area');
-  ta.innerHTML = teams.length === 0
+  // Team score rows
+  const ta=document.getElementById('score-team-area');
+  ta.innerHTML=teams.length===0
     ? '<div class="empty">Create teams in Setup first</div>'
-    : teams.map(t => `
-      <div class="score-team-row">
-        <div class="score-left">
-          <div class="score-dot" style="background:${t.color}"></div>
-          <div class="score-name">${esc(t.name)}</div>
-        </div>
-        <div class="score-controls">
-          <button class="score-btn" onclick="adjTeamScore('${t.id}',-1)">−</button>
-          <input class="score-input-field" type="number" id="ts_${t.id}" value="${state.scores[t.id]||0}" min="0">
-          <button class="score-btn" onclick="adjTeamScore('${t.id}',1)">+</button>
-        </div>
-      </div>`).join('');
+    : teams.map(t=>{
+        const cur=pendingTeamScores[t.id]??state.scores[t.id]??0;
+        return `<div class="score-team-row">
+          <div class="score-left">
+            <div class="score-dot" style="background:${t.color}"></div>
+            <div class="score-name">${esc(t.name)}</div>
+          </div>
+          <div class="score-controls">
+            <button class="score-btn" onclick="adjScore('${t.id}',true,-${STEP})">−</button>
+            <div class="score-val" id="sv_${t.id}">${cur}</div>
+            <button class="score-btn" onclick="adjScore('${t.id}',true,${STEP})">+</button>
+          </div>
+        </div>`;
+      }).join('');
 
-  const pa = document.getElementById('score-player-area');
-  const members = membersArray();
-  pa.innerHTML = members.length === 0
+  // Player score rows
+  const pa=document.getElementById('score-player-area');
+  pa.innerHTML=members.length===0
     ? '<div class="empty">Add members in Setup first</div>'
-    : members.map(m => {
-        const team = getMemberTeam(m.id);
+    : members.map(m=>{
+        const team=getMemberTeam(m.id);
+        const color=team?team.color:'var(--muted)';
+        const cur=pendingPlayerScores[m.id]??state.playerScores[m.id]??0;
         return `<div class="player-score-row">
           <div class="member-avatar" style="${team?`background:${team.color}22;border-color:${team.color}`:'border-color:var(--border)'};width:26px;height:26px;font-size:10px">${initials(m.name)}</div>
           <div class="player-score-name">${esc(m.name)}</div>
-          ${team ? `<span class="player-score-team" style="background:${team.color}22;color:${team.color}">${esc(team.name)}</span>` : ''}
-          <input class="player-score-input" type="number" id="ps_${m.id}" value="${state.playerScores[m.id]||0}" min="0">
+          ${team?`<span class="player-score-team" style="background:${team.color}22;color:${team.color}">${esc(team.name)}</span>`:''}
+          <div class="player-score-controls">
+            <button class="score-btn" onclick="adjScore('${m.id}',false,-${STEP})">−</button>
+            <div class="player-score-val" id="pv_${m.id}" style="color:${color}">${cur}</div>
+            <button class="score-btn" onclick="adjScore('${m.id}',false,${STEP})">+</button>
+          </div>
         </div>`;
       }).join('');
 }
 
-// ── RENDER SETUP ──
-function renderSetup() {
-  const locked  = document.getElementById('setup-lock');
-  const content = document.getElementById('setup-content');
-  if (!isAdmin) { locked.style.display=''; content.style.display='none'; return; }
+// ── RENDER: SETUP ──
+function renderSetup(){
+  const locked=document.getElementById('setup-lock');
+  const content=document.getElementById('setup-content');
+  if(!isAdmin){ locked.style.display=''; content.style.display='none'; return; }
   locked.style.display='none'; content.style.display='';
 
-  const members = membersArray();
-  document.getElementById('memberCount').textContent = members.length;
-  const ml = document.getElementById('member-list-setup');
-  ml.innerHTML = members.length === 0
+  const members=membersArray(), teams=teamsArray();
+  document.getElementById('memberCount').textContent=members.length;
+
+  // Member list
+  const ml=document.getElementById('member-list-setup');
+  ml.innerHTML=members.length===0
     ? '<div class="empty" style="padding:14px">No members yet</div>'
-    : members.map(m => {
-        const team = getMemberTeam(m.id);
+    : members.map(m=>{
+        const team=getMemberTeam(m.id);
         return `<div class="member-item" style="cursor:default">
           <div class="member-left">
             <div class="member-avatar" style="${team?`background:${team.color}22;border-color:${team.color}`:''}">
               ${initials(m.name)}</div>
-            <span class="member-name">${esc(m.name)}</span>
+            <div>
+              <div class="member-name">${esc(m.name)}</div>
+              ${team?`<div style="font-size:11px;color:${team.color}">${esc(team.name)}</div>`:'<div style="font-size:11px;color:var(--muted)">Unassigned</div>'}
+            </div>
           </div>
-          <div class="flex-row">
-            ${team ? `<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:${team.color}22;color:${team.color}">${esc(team.name)}</span>` : ''}
-            <button class="btn btn-ghost btn-sm" onclick="deleteMember('${m.id}')">✕</button>
-          </div>
+          <button class="btn btn-ghost btn-sm" onclick="deleteMember('${m.id}')">✕</button>
         </div>`;
       }).join('');
 
-  const teams = teamsArray();
-  const tl = document.getElementById('teams-list-setup');
-  tl.innerHTML = teams.length === 0
-    ? '<div style="color:var(--muted);font-size:13px">No teams created</div>'
-    : teams.map(t => `
-      <div class="flex-between mb-8" style="padding:10px 12px;background:var(--surface2);border-radius:8px;border-left:4px solid ${t.color}">
-        <div class="flex-row">
-          <div class="team-color-dot" style="background:${t.color}"></div>
-          <span style="font-weight:700">${esc(t.name)}</span>
-          <span style="font-size:11px;color:var(--muted)">${t.members.length} members</span>
-        </div>
-        <button class="btn btn-danger btn-sm" onclick="deleteTeam('${t.id}')">Delete</button>
-      </div>`).join('');
+  // Teams with assign buttons
+  const ta=document.getElementById('teams-setup-area');
+  const te=document.getElementById('teams-setup-empty');
+  if(teams.length===0){ ta.innerHTML=''; te.style.display=''; return; }
+  te.style.display='none';
+  ta.innerHTML=teams.map(t=>{
+    const tMembers=t.members.map(mid=>members.find(m=>m.id===mid)).filter(Boolean);
+    return `<div class="team-card-setup" style="border-color:${t.color}50;margin-bottom:12px">
+      <div class="team-header-setup" style="background:${t.color}18;border-bottom:1px solid ${t.color}30">
+        <div class="team-color-dot" style="background:${t.color}"></div>
+        <div class="team-name-setup" style="color:${t.color}">${esc(t.name)}</div>
+        <span style="font-size:11px;color:var(--muted)">${tMembers.length}/5</span>
+        <button class="btn btn-danger btn-sm" style="margin-left:8px" onclick="deleteTeam('${t.id}')">Delete</button>
+      </div>
+      <div class="team-members-setup">
+        ${tMembers.length===0
+          ? `<div style="color:var(--muted);font-size:12px;padding:4px 0">No members yet</div>`
+          : tMembers.map(m=>`
+            <div class="team-member-chip-setup" style="background:${t.color}22;color:${t.color}"
+              onclick="removeMemberAssign('${m.id}','${t.id}')">
+              ${esc(m.name)}<span class="chip-x">✕</span>
+            </div>`).join('')
+        }
+      </div>
+      <div class="team-assign-btn">
+        <button class="btn btn-ghost btn-sm" onclick="openAssignModal('${t.id}')">＋ Assign Members</button>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// ── KICK OFF ──
 initFirebase();
 </script>
 </body>
