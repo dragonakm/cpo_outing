@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CPO Team Outing — May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f; --surface: #13131a; --surface2: #1c1c28;
+    --border: #2a2a3a; --text: #f0f0f5; --muted: #6b6b88;
+    --accent: #f5c842; --danger: #ff4f4f; --success: #3ddc84;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .logo-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1.5px; color: var(--accent); line-height: 1.2; }
+  .logo-subtitle { font-size: 11px; font-style: italic; color: var(--muted); line-height: 1.4; margin-top: 3px; max-width: 270px; }
+  .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .admin-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; background: var(--accent); color: #0a0a0f; border-radius: 4px; letter-spacing: 0.5px; display: none; }
+  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex-shrink: 0; transition: background 0.3s; }
+  .sync-dot.live { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .sync-dot.error { background: var(--danger); }
+
+  nav { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 73px; z-index: 99; }
+  .tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-icon { font-size: 17px; display: block; margin-bottom: 2px; }
+
+  main { padding: 16px; max-width: 600px; margin: 0 auto; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: var(--accent); margin-bottom: 2px; }
+  .section-sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+
+  .config-banner { background: #1a1208; border: 1px solid #f5c84240; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+  .config-banner strong { color: var(--accent); }
+  .config-step { margin-top: 8px; color: var(--muted); line-height: 1.6; }
+  .config-step code { background: var(--surface2); color: var(--text); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .card-title { font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+  .btn-primary { background: var(--accent); color: #0a0a0f; }
+  .btn-primary:active { opacity: 0.85; transform: scale(0.97); }
+  .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+  .btn-full { width: 100%; justify-content: center; }
+
+  .input { width: 100%; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
+  .input:focus { border-color: var(--accent); }
+  .input-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .input-row .input { margin-bottom: 0; }
+
+  .member-list { display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
+  .member-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--surface2); border-radius: 8px; border: 1px solid var(--border); font-size: 14px; }
+  .member-left { display: flex; align-items: center; gap: 10px; }
+  .member-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; flex-shrink: 0; background: var(--surface); border: 2px solid var(--border); }
+  .member-name { font-weight: 500; }
+
+  .assign-member-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--surface2); border-radius: 8px; border: 1px solid var(--border); font-size: 13px; cursor: pointer; transition: all 0.15s; margin-bottom: 6px; }
+  .assign-member-item:active { opacity: 0.7; }
+  .assign-member-item.taken { opacity: 0.4; cursor: default; }
+  .assign-action-add { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: var(--accent); color: #0a0a0f; flex-shrink: 0; }
+  .assign-action-remove { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: var(--danger); color: #fff; flex-shrink: 0; }
+  .assign-action-taken { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: var(--surface); color: var(--muted); flex-shrink: 0; }
+
+  .team-card-ro { background: var(--surface); border-radius: 12px; border: 2px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+  .team-header-ro { padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+  .team-color-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .team-name-ro { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; flex: 1; }
+  .team-member-count { font-size: 11px; color: var(--muted); }
+  .team-members-ro { padding: 0 12px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .member-chip-ro { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+
+  .team-card-setup { background: var(--surface); border-radius: 12px; border: 2px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+  .team-header-setup { padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+  .team-name-setup { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; flex: 1; }
+  .team-members-setup { padding: 0 12px 4px; display: flex; flex-wrap: wrap; gap: 6px; min-height: 32px; }
+  .team-member-chip-setup { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 5px; cursor: pointer; transition: opacity 0.15s; }
+  .team-member-chip-setup:active { opacity: 0.6; }
+  .chip-x { font-size: 10px; opacity: 0.6; }
+  .team-assign-btn { margin: 0 12px 12px; }
+
+  .color-picker-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .color-swatch { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.15s; }
+  .color-swatch.selected { border-color: #fff; transform: scale(1.2); }
+
+  .lb-row { display: flex; align-items: center; padding: 12px 14px; border-radius: 10px; margin-bottom: 8px; background: var(--surface2); gap: 12px; border-left: 3px solid transparent; }
+  .lb-rank { font-family: 'Bebas Neue', sans-serif; font-size: 22px; width: 26px; text-align: center; flex-shrink: 0; }
+  .lb-rank.gold { color: #f5c842; } .lb-rank.silver { color: #c0c0c0; } .lb-rank.bronze { color: #cd7f32; }
+  .lb-info { flex: 1; min-width: 0; }
+  .lb-name { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lb-sub { font-size: 11px; color: var(--muted); }
+  .lb-score { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; flex-shrink: 0; }
+  .lb-bar { height: 3px; background: var(--surface); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+  .lb-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+
+  .score-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--surface2); border-radius: 10px; margin-bottom: 8px; }
+  .score-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .score-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .score-name { font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .score-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .score-btn { width: 32px; height: 32px; border-radius: 7px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 700; transition: all 0.15s; }
+  .score-btn:active { background: var(--border); transform: scale(0.9); }
+  .score-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; min-width: 48px; text-align: center; }
+
+  .toggle-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .toggle-btn { flex: 1; padding: 8px; text-align: center; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); transition: all 0.2s; }
+  .toggle-btn.active { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
+
+  .flex-row { display: flex; align-items: center; gap: 8px; }
+  .flex-between { display: flex; align-items: center; justify-content: space-between; }
+  .mt-8 { margin-top: 8px; } .mt-16 { margin-top: 16px; }
+  .mb-8 { margin-bottom: 8px; } .mb-12 { margin-bottom: 12px; }
+  .label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .empty { text-align: center; padding: 28px 16px; color: var(--muted); font-size: 13px; }
+  .empty-icon { font-size: 36px; margin-bottom: 8px; }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  .muted-text { color: var(--muted); font-size: 12px; }
+
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--success); color: #0a0a0f; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 700; z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+  .modal-overlay.show { opacity: 1; pointer-events: all; }
+  .modal { background: var(--surface); border-radius: 20px 20px 0 0; padding: 24px 20px 36px; width: 100%; max-width: 600px; transform: translateY(100%); transition: transform 0.3s ease; max-height: 85vh; overflow-y: auto; }
+  .modal-overlay.show .modal { transform: translateY(0); }
+  .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 4px; }
+  .modal-sub { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .assign-list { max-height: 55vh; overflow-y: auto; margin-top: 12px; }
+
+  .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo-title">CPO Team Outing — May 2026</div>
+      <div class="logo-subtitle">"The important thing in life is not the triumph, but the struggle. The essential thing is not to have conquered, but to have fought well." — Pierre de Coubertin</div>
+    </div>
+    <div class="header-right">
+      <div class="sync-dot" id="syncDot"></div>
+      <div class="admin-badge" id="adminBadge">ADMIN</div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="tab active" onclick="switchTab('dashboard')"><span class="tab-icon">🏆</span>Board</div>
+  <div class="tab" onclick="switchTab('teams')"><span class="tab-icon">👥</span>Teams</div>
+  <div class="tab" onclick="switchTab('scores')"><span class="tab-icon">🎯</span>Scores</div>
+  <div class="tab" onclick="switchTab('setup')"><span class="tab-icon">⚙️</span>Setup</div>
+</nav>
+
+<main>
+
+  <div id="firebaseBanner" class="config-banner" style="display:none">
+    <strong>⚠️ Firebase not configured</strong>
+    <div class="config-step">Find <code>PASTE_YOUR_FIREBASE_CONFIG_HERE</code> in this file and replace it with your Firebase config object.</div>
+  </div>
+
+  <!-- TAB 1: LEADERBOARD -->
+  <div id="page-dashboard" class="page active">
+    <div class="section-title">Leaderboard</div>
+    <div class="section-sub">Live standings · updates in real time</div>
+    <div class="toggle-row">
+      <div class="toggle-btn active" onclick="switchLB('team',this)">Teams</div>
+      <div class="toggle-btn" onclick="switchLB('player',this)">Players</div>
+    </div>
+    <div id="lb-team"></div>
+    <div id="lb-player" style="display:none"></div>
+  </div>
+
+  <!-- TAB 2: TEAMS (read-only) -->
+  <div id="page-teams" class="page">
+    <div class="section-title">Teams</div>
+    <div class="section-sub">Team colours &amp; members</div>
+    <div id="teams-ro-area"></div>
+    <div id="teams-ro-empty" class="empty" style="display:none"><div class="empty-icon">👥</div>No teams set up yet</div>
+  </div>
+
+  <!-- TAB 3: SCORES (admin) -->
+  <div id="page-scores" class="page">
+    <div id="scores-lock" class="empty">
+      <div class="empty-icon">🔒</div>Admin access required
+      <div class="mt-16"><button class="btn btn-primary" onclick="showAdminModal()">Login as Admin</button></div>
+    </div>
+    <div id="scores-content" style="display:none">
+      <div class="section-title">Scores</div>
+      <div class="section-sub">Points in steps of 10 · adjust all then Save</div>
+      <div class="toggle-row">
+        <div class="toggle-btn active" onclick="switchScoreMode('team',this)">By Team</div>
+        <div class="toggle-btn" onclick="switchScoreMode('player',this)">By Player</div>
+      </div>
+      <div id="score-team-area"></div>
+      <div id="score-player-area" style="display:none"></div>
+      <div class="mt-16">
+        <button class="btn btn-primary btn-full" id="saveBtn" onclick="saveScores()">💾 Save All Scores</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: SETUP (admin) -->
+  <div id="page-setup" class="page">
+    <div id="setup-lock" class="empty">
+      <div class="empty-icon">🔒</div>Admin access required
+      <div class="mt-16"><button class="btn btn-primary" onclick="showAdminModal()">Login as Admin</button></div>
+    </div>
+    <div id="setup-content" style="display:none">
+      <div class="section-title">Setup</div>
+      <div class="section-sub">Members, Teams &amp; Assignments</div>
+      <div class="card">
+        <div class="card-title">👤 Members (<span id="memberCount">0</span>)</div>
+        <div class="input-row">
+          <input id="memberInput" class="input" type="text" placeholder="Full name…" onkeydown="if(event.key==='Enter')addMember()">
+          <button class="btn btn-primary" onclick="addMember()">Add</button>
+        </div>
+        <div id="member-list-setup" class="member-list"></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">🎨 Teams &amp; Assignments</div>
+        <div class="input-row">
+          <input id="teamNameInput" class="input" type="text" placeholder="Team name…" onkeydown="if(event.key==='Enter')addTeam()">
+          <button class="btn btn-primary" onclick="addTeam()">Create</button>
+        </div>
+        <div class="label mt-8">Pick Colour</div>
+        <div class="color-picker-row" id="colorPicker">
+          <div class="color-swatch selected" style="background:#ff4f4f" data-color="#ff4f4f" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#ff8c00" data-color="#ff8c00" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#f5c842" data-color="#f5c842" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#3ddc84" data-color="#3ddc84" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#00d4ff" data-color="#00d4ff" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#4f8aff" data-color="#4f8aff" onclick="selectColor(this)"></div>
+          <div class="color-swatch" style="background:#a855f7" data-color="#a855f7" onclick="selectColor(this)"></div>
+        </div>
+        <div class="divider"></div>
+        <div id="teams-setup-area"></div>
+        <div id="teams-setup-empty" class="muted-text" style="display:none">No teams created yet</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Admin Modal -->
+<div class="modal-overlay" id="adminModal" onclick="if(event.target===this)this.classList.remove('show')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Admin Login</div>
+    <div class="label mt-8">Passcode</div>
+    <input id="adminPassInput" class="input mb-12" type="password" placeholder="Enter passcode…" onkeydown="if(event.key==='Enter')verifyAdmin()">
+    <button class="btn btn-primary btn-full" onclick="verifyAdmin()">Unlock</button>
+    <div id="adminError" style="color:var(--danger);font-size:13px;margin-top:10px;text-align:center;display:none">Incorrect passcode</div>
+  </div>
+</div>
+
+<!-- Assign Members Modal -->
+<div class="modal-overlay" id="assignModal" onclick="if(event.target===this){this.classList.remove('show');activeAssignTeamId=null;}">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="assignModalTitle">Assign Members</div>
+    <div class="modal-sub" id="assignModalSub"></div>
+    <div class="label mt-8">Tap + Add to assign · tap Remove to unassign</div>
+    <div class="assign-list" id="assignModalList"></div>
+    <div class="mt-16">
+      <button class="btn btn-primary btn-full" onclick="document.getElementById('assignModal').classList.remove('show');activeAssignTeamId=null;">Done</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Paste your Firebase config here
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const firebaseConfig = PASTE_YOUR_FIREBASE_CONFIG_HERE;
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+const PASSCODE = 'aajks2026';
+const STEP = 10;
+
+let db = null;
+let isAdmin = false;
+let selectedColor = '#ff4f4f';
+let activeAssignTeamId = null;
+let pendingTeamScores = {};
+let pendingPlayerScores = {};
+
+let state = { members: {}, teams: {}, scores: {}, playerScores: {} };
+
+// ── FIREBASE ──
+function initFirebase() {
+  try {
+    const app = initializeApp(firebaseConfig);
+    db = getDatabase(app);
+    setSyncStatus('live');
+    onValue(ref(db, 'torq03'), function(snap) {
+      var d = snap.val() || {};
+      state.members      = d.members      || {};
+      state.teams        = d.teams        || {};
+      state.scores       = d.scores       || {};
+      state.playerScores = d.playerScores || {};
+      setSyncStatus('live');
+      refreshCurrentPage();
+    }, function() { setSyncStatus('error'); });
+    document.getElementById('firebaseBanner').style.display = 'none';
+  } catch(e) {
+    setSyncStatus('error');
+    document.getElementById('firebaseBanner').style.display = '';
+  }
+}
+
+function setSyncStatus(s) {
+  var dot = document.getElementById('syncDot');
+  dot.className = 'sync-dot' + (s === 'live' ? ' live' : s === 'error' ? ' error' : '');
+}
+
+async function pushData(path, value) {
+  if (!db) return;
+  try { await set(ref(db, 'torq03/' + path), value); }
+  catch(e) { showToast('Sync error — check connection', 'var(--danger)'); setSyncStatus('error'); }
+}
+
+// ── HELPERS ──
+function initials(name) {
+  return name.split(' ').map(function(w){ return w[0] || ''; }).join('').toUpperCase().slice(0,2);
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showToast(msg, color) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = color || 'var(--success)';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+function membersArray() {
+  return Object.keys(state.members).map(function(id){ return Object.assign({id: id}, state.members[id]); });
+}
+function teamsArray() {
+  return Object.keys(state.teams).map(function(id){
+    var t = state.teams[id];
+    var members = t.members ? Object.keys(t.members) : [];
+    return { id: id, name: t.name, color: t.color, members: members };
+  });
+}
+function getMemberTeam(memberId) {
+  var teams = teamsArray();
+  for (var i = 0; i < teams.length; i++) {
+    if (teams[i].members.indexOf(memberId) !== -1) return teams[i];
+  }
+  return null;
+}
+
+// ── TABS ──
+window.switchTab = function(name) {
+  var tabNames = ['dashboard','teams','scores','setup'];
+  document.querySelectorAll('.tab').forEach(function(t, i){
+    t.classList.toggle('active', tabNames[i] === name);
+  });
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  renderPage(name);
+};
+
+function refreshCurrentPage() {
+  var active = document.querySelector('.page.active');
+  if (active) renderPage(active.id.replace('page-', ''));
+  if (activeAssignTeamId && document.getElementById('assignModal').classList.contains('show')) {
+    renderAssignModal(activeAssignTeamId);
+  }
+}
+
+function renderPage(name) {
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'teams')     renderTeamsRO();
+  if (name === 'scores')    renderScores();
+  if (name === 'setup')     renderSetup();
+}
+
+// ── ADMIN ──
+window.showAdminModal = function() {
+  document.getElementById('adminPassInput').value = '';
+  document.getElementById('adminError').style.display = 'none';
+  document.getElementById('adminModal').classList.add('show');
+  setTimeout(function(){ document.getElementById('adminPassInput').focus(); }, 350);
+};
+window.verifyAdmin = function() {
+  if (document.getElementById('adminPassInput').value === PASSCODE) {
+    isAdmin = true;
+    document.getElementById('adminModal').classList.remove('show');
+    document.getElementById('adminBadge').style.display = 'inline-block';
+    renderScores(); renderSetup();
+    showToast('Admin access granted ✓');
+  } else {
+    document.getElementById('adminError').style.display = 'block';
+  }
+};
+
+// ── MEMBERS ──
+window.addMember = async function() {
+  var inp = document.getElementById('memberInput');
+  var name = inp.value.trim();
+  if (!name) return;
+  var existing = membersArray().filter(function(m){ return m.name.toLowerCase() === name.toLowerCase(); });
+  if (existing.length > 0) { showToast('Already exists', 'var(--danger)'); return; }
+  await pushData('members/m' + Date.now(), { name: name });
+  inp.value = '';
+};
+window.deleteMember = async function(id) {
+  await pushData('members/' + id, null);
+  var teams = teamsArray();
+  for (var i = 0; i < teams.length; i++) {
+    if (teams[i].members.indexOf(id) !== -1) await pushData('teams/' + teams[i].id + '/members/' + id, null);
+  }
+  await pushData('playerScores/' + id, null);
+};
+
+// ── TEAMS ──
+window.selectColor = function(el) {
+  document.querySelectorAll('.color-swatch').forEach(function(s){ s.classList.remove('selected'); });
+  el.classList.add('selected');
+  selectedColor = el.dataset.color;
+};
+window.addTeam = async function() {
+  var inp = document.getElementById('teamNameInput');
+  var name = inp.value.trim();
+  if (!name) return;
+  var id = 't' + Date.now();
+  await pushData('teams/' + id, { name: name, color: selectedColor, members: {} });
+  await pushData('scores/' + id, 0);
+  inp.value = '';
+};
+window.deleteTeam = async function(id) {
+  await pushData('teams/' + id, null);
+  await pushData('scores/' + id, null);
+};
+
+// ── ASSIGN MODAL ──
+window.openAssignModal = function(teamId) {
+  activeAssignTeamId = teamId;
+  renderAssignModal(teamId);
+  document.getElementById('assignModal').classList.add('show');
+};
+
+function renderAssignModal(teamId) {
+  var teams = teamsArray();
+  var team = null;
+  for (var i = 0; i < teams.length; i++) { if (teams[i].id === teamId) { team = teams[i]; break; } }
+  if (!team) return;
+
+  document.getElementById('assignModalTitle').textContent = team.name;
+  document.getElementById('assignModalSub').textContent = team.members.length + ' member' + (team.members.length !== 1 ? 's' : '') + ' assigned';
+
+  var members = membersArray();
+  var list = document.getElementById('assignModalList');
+  if (members.length === 0) {
+    list.innerHTML = '<div class="empty" style="padding:20px">Add members in Setup first</div>';
+    return;
+  }
+
+  var html = '';
+  for (var j = 0; j < members.length; j++) {
+    var m = members[j];
+    var memberTeam = getMemberTeam(m.id);
+    var inThisTeam = team.members.indexOf(m.id) !== -1;
+    var inOtherTeam = memberTeam !== null && !inThisTeam;
+
+    var avatarStyle = inThisTeam ? 'background:' + team.color + '22;border-color:' + team.color : '';
+    var subText = inOtherTeam ? '<div style="font-size:11px;color:var(--muted)">In ' + esc(memberTeam.name) + '</div>' : '';
+
+    var itemClass = 'assign-member-item' + (inOtherTeam ? ' taken' : '');
+    var actionBtn = '';
+    var onclickAttr = '';
+
+    if (inThisTeam) {
+      actionBtn = '<span class="assign-action-remove">Remove</span>';
+      onclickAttr = 'onclick="removeMemberAssign(\'' + m.id + '\',\'' + teamId + '\')"';
+    } else if (inOtherTeam) {
+      actionBtn = '<span class="assign-action-taken">Taken</span>';
+      onclickAttr = '';
+    } else {
+      actionBtn = '<span class="assign-action-add">+ Add</span>';
+      onclickAttr = 'onclick="assignMember(\'' + m.id + '\',\'' + teamId + '\')"';
+    }
+
+    html += '<div class="' + itemClass + '" ' + onclickAttr + '>';
+    html += '<div class="member-left">';
+    html += '<div class="member-avatar" style="' + avatarStyle + '">' + initials(m.name) + '</div>';
+    html += '<div><div class="member-name">' + esc(m.name) + '</div>' + subText + '</div>';
+    html += '</div>';
+    html += actionBtn;
+    html += '</div>';
+  }
+  list.innerHTML = html;
+}
+
+window.assignMember = async function(memberId, teamId) {
+  await pushData('teams/' + teamId + '/members/' + memberId, true);
+};
+window.removeMemberAssign = async function(memberId, teamId) {
+  await pushData('teams/' + teamId + '/members/' + memberId, null);
+};
+
+// ── SCORES ──
+let scoreModeTeam = true;
+window.switchScoreMode = function(mode, el) {
+  scoreModeTeam = mode === 'team';
+  document.querySelectorAll('#page-scores .toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById('score-team-area').style.display = scoreModeTeam ? '' : 'none';
+  document.getElementById('score-player-area').style.display = scoreModeTeam ? 'none' : '';
+};
+window.adjScore = function(key, isTeam, delta) {
+  if (isTeam) {
+    var cur = pendingTeamScores[key] !== undefined ? pendingTeamScores[key] : (parseInt(state.scores[key]) || 0);
+    pendingTeamScores[key] = Math.max(0, cur + delta);
+    var el = document.getElementById('sv_' + key);
+    if (el) el.textContent = pendingTeamScores[key];
+  } else {
+    var cur2 = pendingPlayerScores[key] !== undefined ? pendingPlayerScores[key] : (parseInt(state.playerScores[key]) || 0);
+    pendingPlayerScores[key] = Math.max(0, cur2 + delta);
+    var el2 = document.getElementById('pv_' + key);
+    if (el2) el2.textContent = pendingPlayerScores[key];
+  }
+};
+window.saveScores = async function() {
+  var btn = document.getElementById('saveBtn');
+  btn.innerHTML = '<span class="spinner"></span> Saving…';
+  btn.disabled = true;
+  var tkeys = Object.keys(pendingTeamScores);
+  for (var i = 0; i < tkeys.length; i++) await pushData('scores/' + tkeys[i], pendingTeamScores[tkeys[i]]);
+  var pkeys = Object.keys(pendingPlayerScores);
+  for (var j = 0; j < pkeys.length; j++) await pushData('playerScores/' + pkeys[j], pendingPlayerScores[pkeys[j]]);
+  pendingTeamScores = {}; pendingPlayerScores = {};
+  btn.innerHTML = '💾 Save All Scores';
+  btn.disabled = false;
+  showToast('All scores saved & synced ✓');
+};
+
+// ── RENDER DASHBOARD ──
+let lbMode = 'team';
+window.switchLB = function(mode, el) {
+  lbMode = mode;
+  document.querySelectorAll('#page-dashboard .toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById('lb-team').style.display   = mode === 'team'   ? '' : 'none';
+  document.getElementById('lb-player').style.display = mode === 'player' ? '' : 'none';
+};
+function renderDashboard() {
+  var teams = teamsArray();
+  var members = membersArray();
+
+  var tlb = document.getElementById('lb-team');
+  if (teams.length === 0) {
+    tlb.innerHTML = '<div class="empty"><div class="empty-icon">🏆</div>No teams set up yet</div>';
+  } else {
+    var sorted = teams.slice().sort(function(a,b){ return (state.scores[b.id]||0) - (state.scores[a.id]||0); });
+    var max = 1;
+    sorted.forEach(function(t){ if ((state.scores[t.id]||0) > max) max = state.scores[t.id]||0; });
+    var html = '';
+    sorted.forEach(function(t, i) {
+      var sc = state.scores[t.id] || 0;
+      var pct = Math.round((sc / max) * 100);
+      var rc = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+      html += '<div class="lb-row" style="border-left-color:' + t.color + '">';
+      html += '<div class="lb-rank ' + rc + '">' + (i+1) + '</div>';
+      html += '<div class="lb-info">';
+      html += '<div class="lb-name" style="color:' + t.color + '">' + esc(t.name) + '</div>';
+      html += '<div class="lb-sub">' + t.members.length + ' member' + (t.members.length !== 1 ? 's' : '') + '</div>';
+      html += '<div class="lb-bar"><div class="lb-bar-fill" style="width:' + pct + '%;background:' + t.color + '"></div></div>';
+      html += '</div>';
+      html += '<div class="lb-score" style="color:' + t.color + '">' + sc + '</div>';
+      html += '</div>';
+    });
+    tlb.innerHTML = html;
+  }
+
+  var plb = document.getElementById('lb-player');
+  if (members.length === 0) {
+    plb.innerHTML = '<div class="empty"><div class="empty-icon">👤</div>No members yet</div>';
+  } else {
+    var sorted2 = members.slice().sort(function(a,b){ return (state.playerScores[b.id]||0) - (state.playerScores[a.id]||0); });
+    var max2 = 1;
+    sorted2.forEach(function(m){ if ((state.playerScores[m.id]||0) > max2) max2 = state.playerScores[m.id]||0; });
+    var html2 = '';
+    sorted2.forEach(function(m, i) {
+      var sc = state.playerScores[m.id] || 0;
+      var team = getMemberTeam(m.id);
+      var color = team ? team.color : 'var(--muted)';
+      var pct = Math.round((sc / max2) * 100);
+      var rc = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+      var teamLabel = team ? '<span style="color:' + team.color + '">' + esc(team.name) + '</span>' : 'Unassigned';
+      html2 += '<div class="lb-row" style="border-left-color:' + color + '">';
+      html2 += '<div class="lb-rank ' + rc + '">' + (i+1) + '</div>';
+      html2 += '<div class="lb-info">';
+      html2 += '<div class="lb-name">' + esc(m.name) + '</div>';
+      html2 += '<div class="lb-sub">' + teamLabel + '</div>';
+      html2 += '<div class="lb-bar"><div class="lb-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>';
+      html2 += '</div>';
+      html2 += '<div class="lb-score" style="color:' + color + '">' + sc + '</div>';
+      html2 += '</div>';
+    });
+    plb.innerHTML = html2;
+  }
+}
+
+// ── RENDER TEAMS (read-only) ──
+function renderTeamsRO() {
+  var teams = teamsArray();
+  var area = document.getElementById('teams-ro-area');
+  var empty = document.getElementById('teams-ro-empty');
+  if (teams.length === 0) { area.innerHTML = ''; empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  var html = '';
+  teams.forEach(function(t) {
+    var tMembers = t.members.map(function(mid){ return membersArray().find(function(m){ return m.id === mid; }); }).filter(Boolean);
+    html += '<div class="team-card-ro" style="border-color:' + t.color + '40">';
+    html += '<div class="team-header-ro" style="background:' + t.color + '18;border-bottom:1px solid ' + t.color + '30">';
+    html += '<div class="team-color-dot" style="background:' + t.color + '"></div>';
+    html += '<div class="team-name-ro" style="color:' + t.color + '">' + esc(t.name) + '</div>';
+    html += '<div class="team-member-count">' + tMembers.length + ' member' + (tMembers.length !== 1 ? 's' : '') + '</div>';
+    html += '</div>';
+    html += '<div class="team-members-ro">';
+    if (tMembers.length === 0) {
+      html += '<div style="color:var(--muted);font-size:12px;padding:4px 0">No members assigned yet</div>';
+    } else {
+      tMembers.forEach(function(m){
+        html += '<span class="member-chip-ro" style="background:' + t.color + '22;color:' + t.color + '">' + esc(m.name) + '</span>';
+      });
+    }
+    html += '</div></div>';
+  });
+  area.innerHTML = html;
+}
+
+// ── RENDER SCORES ──
+function renderScores() {
+  var locked  = document.getElementById('scores-lock');
+  var content = document.getElementById('scores-content');
+  if (!isAdmin) { locked.style.display = ''; content.style.display = 'none'; return; }
+  locked.style.display = 'none'; content.style.display = '';
+
+  var teams = teamsArray();
+  var ta = document.getElementById('score-team-area');
+  if (teams.length === 0) {
+    ta.innerHTML = '<div class="empty">Create teams in Setup first</div>';
+  } else {
+    var html = '';
+    teams.forEach(function(t) {
+      var cur = pendingTeamScores[t.id] !== undefined ? pendingTeamScores[t.id] : (state.scores[t.id] || 0);
+      html += '<div class="score-row">';
+      html += '<div class="score-left"><div class="score-dot" style="background:' + t.color + '"></div><div class="score-name">' + esc(t.name) + '</div></div>';
+      html += '<div class="score-controls">';
+      html += '<button class="score-btn" onclick="adjScore(\'' + t.id + '\',true,-' + STEP + ')">−</button>';
+      html += '<div class="score-val" id="sv_' + t.id + '">' + cur + '</div>';
+      html += '<button class="score-btn" onclick="adjScore(\'' + t.id + '\',true,' + STEP + ')">+</button>';
+      html += '</div></div>';
+    });
+    ta.innerHTML = html;
+  }
+
+  var members = membersArray();
+  var pa = document.getElementById('score-player-area');
+  if (members.length === 0) {
+    pa.innerHTML = '<div class="empty">Add members in Setup first</div>';
+  } else {
+    var html2 = '';
+    members.forEach(function(m) {
+      var team = getMemberTeam(m.id);
+      var color = team ? team.color : 'var(--muted)';
+      var cur = pendingPlayerScores[m.id] !== undefined ? pendingPlayerScores[m.id] : (state.playerScores[m.id] || 0);
+      var avatarStyle = team ? 'background:' + team.color + '22;border-color:' + team.color : 'border-color:var(--border)';
+      var teamBadge = team ? '<span style="font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;background:' + team.color + '22;color:' + team.color + ';flex-shrink:0">' + esc(team.name) + '</span>' : '';
+      html2 += '<div class="score-row">';
+      html2 += '<div class="score-left">';
+      html2 += '<div class="member-avatar" style="' + avatarStyle + ';width:26px;height:26px;font-size:10px">' + initials(m.name) + '</div>';
+      html2 += '<div class="score-name">' + esc(m.name) + '</div>';
+      html2 += teamBadge;
+      html2 += '</div>';
+      html2 += '<div class="score-controls">';
+      html2 += '<button class="score-btn" onclick="adjScore(\'' + m.id + '\',false,-' + STEP + ')">−</button>';
+      html2 += '<div class="score-val" id="pv_' + m.id + '" style="color:' + color + '">' + cur + '</div>';
+      html2 += '<button class="score-btn" onclick="adjScore(\'' + m.id + '\',false,' + STEP + ')">+</button>';
+      html2 += '</div></div>';
+    });
+    pa.innerHTML = html2;
+  }
+}
+
+// ── RENDER SETUP ──
+function renderSetup() {
+  var locked  = document.getElementById('setup-lock');
+  var content = document.getElementById('setup-content');
+  if (!isAdmin) { locked.style.display = ''; content.style.display = 'none'; return; }
+  locked.style.display = 'none'; content.style.display = '';
+
+  var members = membersArray();
+  var teams = teamsArray();
+  document.getElementById('memberCount').textContent = members.length;
+
+  var ml = document.getElementById('member-list-setup');
+  if (members.length === 0) {
+    ml.innerHTML = '<div class="empty" style="padding:14px">No members yet</div>';
+  } else {
+    var html = '';
+    members.forEach(function(m) {
+      var team = getMemberTeam(m.id);
+      var avatarStyle = team ? 'background:' + team.color + '22;border-color:' + team.color : '';
+      var teamLabel = team
+        ? '<div style="font-size:11px;color:' + team.color + '">' + esc(team.name) + '</div>'
+        : '<div style="font-size:11px;color:var(--muted)">Unassigned</div>';
+      html += '<div class="member-item" style="cursor:default">';
+      html += '<div class="member-left">';
+      html += '<div class="member-avatar" style="' + avatarStyle + '">' + initials(m.name) + '</div>';
+      html += '<div><div class="member-name">' + esc(m.name) + '</div>' + teamLabel + '</div>';
+      html += '</div>';
+      html += '<button class="btn btn-ghost btn-sm" onclick="deleteMember(\'' + m.id + '\')">✕</button>';
+      html += '</div>';
+    });
+    ml.innerHTML = html;
+  }
+
+  var ta = document.getElementById('teams-setup-area');
+  var te = document.getElementById('teams-setup-empty');
+  if (teams.length === 0) { ta.innerHTML = ''; te.style.display = ''; return; }
+  te.style.display = 'none';
+  var thtml = '';
+  teams.forEach(function(t) {
+    var tMembers = t.members.map(function(mid){ return members.find(function(m){ return m.id === mid; }); }).filter(Boolean);
+    thtml += '<div class="team-card-setup" style="border-color:' + t.color + '50">';
+    thtml += '<div class="team-header-setup" style="background:' + t.color + '18;border-bottom:1px solid ' + t.color + '30">';
+    thtml += '<div class="team-color-dot" style="background:' + t.color + '"></div>';
+    thtml += '<div class="team-name-setup" style="color:' + t.color + '">' + esc(t.name) + '</div>';
+    thtml += '<span style="font-size:11px;color:var(--muted)">' + tMembers.length + '/5</span>';
+    thtml += '<button class="btn btn-danger btn-sm" style="margin-left:8px" onclick="deleteTeam(\'' + t.id + '\')">Delete</button>';
+    thtml += '</div>';
+    thtml += '<div class="team-members-setup">';
+    if (tMembers.length === 0) {
+      thtml += '<div style="color:var(--muted);font-size:12px;padding:4px 0">No members yet</div>';
+    } else {
+      tMembers.forEach(function(m) {
+        thtml += '<div class="team-member-chip-setup" style="background:' + t.color + '22;color:' + t.color + '" onclick="removeMemberAssign(\'' + m.id + '\',\'' + t.id + '\')">';
+        thtml += esc(m.name) + '<span class="chip-x">✕</span></div>';
+      });
+    }
+    thtml += '</div>';
+    thtml += '<div class="team-assign-btn"><button class="btn btn-ghost btn-sm" onclick="openAssignModal(\'' + t.id + '\')">＋ Assign Members</button></div>';
+    thtml += '</div>';
+  });
+  ta.innerHTML = thtml;
+}
+
+// expose for modal close button
+window.activeAssignTeamId = activeAssignTeamId;
+
+initFirebase();
+</script>
+</body>
+</html>
